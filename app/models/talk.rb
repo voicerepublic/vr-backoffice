@@ -25,7 +25,7 @@
 class Talk < ActiveRecord::Base
 
   extend ::CsvImport
-  
+
   GRADES = {
     ok:           "Everything ok. Quality acceptable. (ok)",
     override:     "Manually overriden, quailty is good. (override)",
@@ -45,7 +45,7 @@ class Talk < ActiveRecord::Base
   acts_as_taggable
   validates :venue, :title, :starts_at, :ends_at, :tag_list, :uri, presence: true
   validates :uri, uniqueness: true
-  
+
   validates :recording_override, format: { with: URL_PATTERN, message: URL_MESSAGE },
             if: ->(t) { t.recording_override? && t.recording_override_changed? }
 
@@ -54,18 +54,19 @@ class Talk < ActiveRecord::Base
   before_validation :set_starts_at
   before_validation :set_ends_at
   before_save :nilify_grade
-  
+
   validates :starts_at_date, format: { with: /\A\d{4}-\d\d-\d\d\z/,
                                        message: "Invalid time" }
   validates :starts_at_time, format: { with: /\A\d\d:\d\d\z/,
                                        message: "Invalid time" }
-  
+
   after_save :schedule_processing_override,
              if: ->(t) { t.recording_override? && t.recording_override_changed? }
 
   delegate :user, to: :venue
 
   serialize :storage
+  serialize :edit_config
 
   image_accessor :image
 
@@ -84,7 +85,7 @@ class Talk < ActiveRecord::Base
   scope :in_dashboard, -> do
     where('ends_at > ? AND starts_at < ?', 4.hours.ago, 4.hours.from_now)
   end
-  
+
   def effective_duration # in seconds
     ended_at - started_at
   end
@@ -148,5 +149,5 @@ class Talk < ActiveRecord::Base
   def nilify_grade
     self.grade = nil if grade.blank?
   end
-  
+
 end

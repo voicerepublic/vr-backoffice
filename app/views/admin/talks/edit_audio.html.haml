@@ -5,6 +5,6 @@ Hello, find me in
 :javascript
   updateUrl = '';
   audioFile = '';
-  revisions = [];
+  revisions = #{(@talk.edit_config || []).to_json};
 
 = javascript_include_tag 'audio_editor/application'
