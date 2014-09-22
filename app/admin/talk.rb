@@ -34,6 +34,16 @@ ActiveAdmin.register Talk do
     end
   end
 
+  action_item only: :show do
+    if talk.state == 'archived' && talk.recording_override.empty?
+      link_to 'Edit Audio', edit_audio_admin_talk_path(talk)
+    end
+  end
+
+  member_action :edit_audio do
+    'hello'
+  end
+
   member_action :postprocess, method: 'put' do
     Delayed::Job.enqueue Postprocess.new(id: params[:id]), queue: 'audio'
     redirect_to({ action: :show }, { notice: "Placed in queue for postprocessing." })
