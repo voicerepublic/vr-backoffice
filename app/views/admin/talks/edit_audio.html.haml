@@ -7,4 +7,69 @@ Hello, find me in
   audioFile = '';
   revisions = [];
 
+= javascript_include_tag 'audio_editor/angular-min'
 = javascript_include_tag 'audio_editor/application'
+
+%head
+  :css
+    body {
+      font: 10px sans-serif;
+    }
+    .outer {
+        width: 900px;
+        height: 150px;
+        overflow: auto;
+    }
+    .inner {
+        width: 10000px;
+        height: 100%;
+    }
+    svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .hover-line { 
+      stroke: black;  
+      fill: none;
+      stroke-width: 1px;
+    }
+    
+    .cut-config { 
+      stroke: blue;  
+      fill: blue;
+      stroke-width: 1px;
+    }
+    
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+    
+    .x.axis path {
+      display: none;
+    }
+    
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+%body{"ng-controller" => "AudioController", :"ng-app" => "AudioCutter"}
+  .outer
+    #inner.inner
+      %waveform{:duration => "duration", :val => "data"}
+  %audio#audio2{:hidden => "true", :src => "click.mp3"}
+  %br/
+  %audio#audio1{"ng-src" => ""}
+    HTML5 audio is not supported
+  %br/
+  %input#audiofile{"ng-model" => "file.url", :style => "width:600px", :type => "text"}/
+  / Button width set so overall size doesn't change when we toggle the label
+  %button#playButton{"ng-click" => "playFile()", :style => "width: 80px"} Play
+  %div
+    Elapsed Time:
+    %input#timeDisplay{"ng-model" => "currentTime", :type => "label"}
