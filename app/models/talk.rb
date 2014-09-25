@@ -94,6 +94,11 @@ class Talk < ActiveRecord::Base
     storage.values.inject(0) { |result, file| result + file[:size] }
   end
 
+  def media_storage
+    @media_storage ||=
+      Storage.directories.new(key: Settings.storage.media, prefix: uri)
+  end
+
   def flv_data
     # return @flv_data unless @flv_data.nil?
     # sum_size, sum_duration = 0, 0

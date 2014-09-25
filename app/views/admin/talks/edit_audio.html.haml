@@ -3,8 +3,11 @@ Hello, find me in
   app/views/admin/talks/edit_audio.html.haml
 
 :javascript
-  updateUrl = '';
-  audioFile = '';
-  revisions = #{(@talk.edit_config || []).to_json};
+  updateUrl = '#{admin_talk_path(id: resource.id)}';
+  audioFile = '#{resource.media_storage.files.get(id+"-precut.mp3").url}';
+  revisions = #{(resource.edit_config || []).to_json};
+
+  authToken = $("meta[name=\"csrf-token\"]").attr("content");
+  //samplePatchOrPutJson = { authenticity_token: authToken, talk: { edit_config: revisions } }
 
 = javascript_include_tag 'audio_editor/application'
