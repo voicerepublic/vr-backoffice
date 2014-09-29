@@ -6,8 +6,17 @@ class Vrmedia < Struct.new(:app, :opts)
     return app.call(env) unless env['REQUEST_METHOD'] == 'GET'
     return app.call(env) unless md = env['PATH_INFO'].match(PATTERN)
 
-    location = env['REQUEST_URI'].sub(':444', '').sub(':3001', ':3000')
+    # this is a horrible hack for chrom(e|ium) in development
+    if Rails.env.development? and
+      env['HTTP_USER_AGENT'].include?('Chrome')
+      file = env["PATH_INFO"].split('/').last
+      base = Settings.path_to_cloud
+      raise "`path_to_cloud` not directory!" if File.directory?(base)
+      path = %x[ find #{base} -name #{file} ].split("\n").first
+      return [ 200, {}, File.open(path, 'r') ]
+    end
 
+    location = env['REQUEST_URI'].sub(':444', '').sub(':3001', ':3000')
     [ 302, { 'Location' => location }, [] ]
   end
 

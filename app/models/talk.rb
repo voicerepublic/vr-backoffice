@@ -93,6 +93,10 @@ class Talk < ActiveRecord::Base
     storage.values.inject(0) { |result, file| result + file[:size] }
   end
 
+  def streams
+    []
+  end
+
   private
 
   # Assemble `starts_at` from `starts_at_date` and `starts_at_time`.
