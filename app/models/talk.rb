@@ -65,7 +65,6 @@ class Talk < ActiveRecord::Base
   delegate :user, to: :venue
 
   serialize :storage
-  serialize :edit_config
 
   image_accessor :image
 

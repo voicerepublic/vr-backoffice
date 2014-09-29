@@ -238,6 +238,7 @@ ActiveAdmin.register Talk do
                     grade
                     format
                     speakers
-                    recording_override ).map(&:to_sym)
+                    recording_override
+                    edit_config ).map(&:to_sym)
 
 end
