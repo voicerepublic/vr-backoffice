@@ -154,11 +154,6 @@ class Talk < ActiveRecord::Base
     self.grade = nil if grade.blank?
   end
 
-<<<<<<< HEAD
-=======
-  ############################################################
-  # from here, shared code with the main app
-
   def generate_flyer?
     starts_at_changed? or title_changed?
   end
@@ -167,5 +162,4 @@ class Talk < ActiveRecord::Base
     Delayed::Job.enqueue GenerateFlyer.new(id: id), queue: 'audio'
   end
 
->>>>>>> integration
 end
