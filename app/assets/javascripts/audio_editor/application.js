@@ -2,6 +2,13 @@
 
 var audioCutter = angular.module('AudioCutter', []);
 
+var saveRevisions = function(revisions) {
+  $.ajax(updateUrl, {
+    type: 'PATCH',
+    dataType: 'json',
+    data: { talk: { edit_config: revisions } } });
+};
+
 // constants
 var margin = {
 	top : 20,
