@@ -1,10 +1,12 @@
 :javascript
   updateUrl = '#{admin_talk_path(id: resource.id)}';
   audioFile = '#{vrmedia_url(resource, "-clean.mp3", true)}';
-  revisions = #{(resource.edit_config || []).to_json};
+  revisions = JSON.parse(#{(resource.edit_config || []).to_json});
 
 = javascript_include_tag 'audio_editor/angular-min'
 = javascript_include_tag 'audio_editor/application'
+
+%button(onclick="saveRevisions([[{a:'s',d:'f'}]])") DO IT!
 
 %div{:"ng-controller" => "AudioController", :"ng-app" => "AudioCutter"}
   .outer

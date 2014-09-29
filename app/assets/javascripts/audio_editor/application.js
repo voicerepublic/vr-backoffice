@@ -6,7 +6,7 @@ var saveRevisions = function(revisions) {
   $.ajax(updateUrl, {
     type: 'PATCH',
     dataType: 'json',
-    data: { talk: { edit_config: revisions } } });
+    data: { talk: { edit_config: JSON.stringify(revisions) } } });
 };
 
 // constants
