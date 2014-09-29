@@ -166,7 +166,7 @@ ActiveAdmin.setup do |config|
   #config.register_stylesheet 'jquery.ui.datepicker.css'
   #config.register_stylesheet 'jquery.ui.slider.css'
   #config.register_stylesheet 'jquery-ui-timepicker-addon.css'
-  
+
   # You can provide an options hash for more control, which is passed along to stylesheet_link_tag():
   #   config.register_stylesheet 'my_print_stylesheet.css', :media => :print
   #
@@ -246,4 +246,8 @@ ActiveAdmin.setup do |config|
   #
   # config.filters = true
 
+end
+
+module ActiveAdmin::ViewHelpers
+  include ApplicationHelper
 end

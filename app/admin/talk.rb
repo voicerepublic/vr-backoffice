@@ -128,14 +128,8 @@ ActiveAdmin.register Talk do
         talk.collect
       end
       row 'download' do
-        url = "//#{request.host_with_port}/vrmedia/#{talk.id}-clean.mp3".
-              sub(':444', '').sub(':3001', ':3000')
-        link_to 'mp3', url, target: '_blank'
-      end
-      row 'download' do
-        url = "//#{request.host_with_port}/vrmedia/#{talk.id}-clean.ogg".
-              sub(':444', '').sub(':3001', ':3000')
-        link_to 'ogg', url, target: '_blank'
+        link_to('ogg', vrmedia_url(talk, '-clean.ogg'), target: '_blank') +
+          ' ' + link_to('mp3', vrmedia_url(talk), target: '_blank')
       end
       row :started_at
       row :format
@@ -147,10 +141,6 @@ ActiveAdmin.register Talk do
         row :recording
         row :recording_override
         row :play_count
-        # row :flv_data do
-        #   number_to_human_size(talk.flv_data[0]) +
-        #     ' (' + talk.flv_data[1] + ')'
-        # end
         row :disk_usage do
           number_to_human_size talk.disk_usage
         end

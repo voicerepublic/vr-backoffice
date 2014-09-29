@@ -93,35 +93,6 @@ class Talk < ActiveRecord::Base
     storage.values.inject(0) { |result, file| result + file[:size] }
   end
 
-  def media_storage
-    @media_storage ||=
-      Storage.directories.new(key: Settings.storage.media, prefix: uri)
-  end
-
-  def flv_data
-    # return @flv_data unless @flv_data.nil?
-    # sum_size, sum_duration = 0, 0
-    # all_files.each do |file|
-    #   path, size, dur, start = file
-    #   if path =~ /\.flv$/
-    #     sum_size += size if size
-    #     if dur
-    #       h, m, s = dur.split(':').map(&:to_i)
-    #       sum_duration += (h * 60 + m) * 60 + s
-    #     end
-    #   end
-    # end
-    # h = sum_duration / 3600
-    # m = sum_duration % 3600 / 60
-    # s = sum_duration % 60
-    # @flv_data = [sum_size, '%02d:%02d:%02d' % [h, m, s]]
-  end
-
-  # TODO provide a list of expected streams (host + guests)
-  def streams
-    []
-  end
-
   private
 
   # Assemble `starts_at` from `starts_at_date` and `starts_at_time`.
