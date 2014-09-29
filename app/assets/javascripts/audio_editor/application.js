@@ -76,6 +76,33 @@ audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, 
 				}
 			};
 
+			$scope.saveRevision = function(){			
+				$scope.revisions[$scope.revisions.length] = JSON.parse(JSON.stringify($scope.cutConfig));				
+				//todo call save method;
+			}
+			
+			$scope.returnToRevision = function(index){
+				if($scope.revisions.length > 0){
+					$scope.cutConfig = $scope.revisions[index];					
+					$scope.rePaintCutConfigs();
+				}
+			}
+
+			$scope.rePaintCutConfigs = function(){
+				var svg = d3.select("svg");
+				var rects = svg.selectAll(".cut-config").data($scope.cutConfig)
+				rects.enter().append("g")
+						.attr("class", "cut-config")
+						.style("opacity", 0.4)
+						.append("rect")
+						.attr("x", function(d){
+							return d.start / $scope.duration * width + margin.left;
+						}).attr("width", function(d){
+							return d.end / $scope.duration * width - d.start / $scope.duration * width;
+						}).attr("y", margin.top).attr("height", height);
+				rects.exit().remove();
+			}
+
 			$scope.currentTime;
 
 			$scope.cutConfig = new Array();
@@ -128,12 +155,15 @@ audioCutter.directive('waveform', function () {
 
 			//OnMousedown event
 			//set xMouseDown and remove if there is a configuration avaiable
-			d3.select("svg").on("mousedown", function () {
+			d3.select(".inner").on("mousedown", function () {
+				if(scope.data == null){
+					return;
+				}
 				xMouseDown = (d3.mouse(this)[0] - margin.left) / width * scope.duration;
 				for (var i = 0; i < scope.cutConfig.length; i++) {
 					if (scope.cutConfig[i].Start <= xMouseDown && scope.cutConfig[i].End >= xMouseDown) {
 						scope.cutConfig.splice(i, 1);
-						rePaintCutConfigs();
+						scope.rePaintCutConfigs();
 						xMouseDown = -1;
 						return true;
 					}
@@ -158,9 +188,10 @@ audioCutter.directive('waveform', function () {
 				console.log(currentCutConfig.End);
 				scope.cutConfig[scope.cutConfig.length] = currentCutConfig;
 				console.log(scope.cutConfig.length);
-				appendCutConfig(currentCutConfig);
+				scope.rePaintCutConfigs()
 				xMouseDown = -1;
-			}).on("mouseleave", function () {
+			});
+			/*.on("mouseleave", function () {
 				if (xMouseDown == -1) {
 					return true;
 				}
@@ -172,9 +203,9 @@ audioCutter.directive('waveform', function () {
 				console.log(currentCutConfig.End);
 				scope.cutConfig[scope.cutConfig.length] = currentCutConfig;
 				console.log(scope.cutConfig.length);
-				appendCutConfig(currentCutConfig);
+				scope.rePaintCutConfigs()
 				xMouseDown = -1;
-			});
+			}); */
 
 			//Return the end of the current cut
 			function GetCurrentPositionCut(currentPosition) {
@@ -184,36 +215,6 @@ audioCutter.directive('waveform', function () {
 					}
 				}
 				return currentPosition;
-			}
-
-			//create a new rect for the cutConfig
-			function appendCutConfig(cutConfig) {
-
-				var startX = cutConfig.Start / scope.duration * width;
-				var endX = cutConfig.End / scope.duration * width
-					var cutSelectionGroup = svg.append("g")
-					.attr("class", "cut-config");
-				var cutSelection = cutSelectionGroup
-					.append("rect")
-					.attr("x", startX).attr("width", endX - startX)
-					.attr("y", 0).attr("height", height);
-				cutSelection.style("opacity", 0.4);
-			}
-
-			//create a new rect for the cutConfig
-			function rePaintCutConfigs() {
-				svg.selectAll("g .cut-config").remove();
-				for (var i = 0; i < scope.cutConfig.length; i++) {
-					var cutSelectionGroup = svg.append("g")
-						.attr("class", "cut-config");
-					var startX = scope.cutConfig[i].Start / scope.duration * width;
-					var endX = scope.cutConfig[i].End / scope.duration * width
-						var cutSelection = cutSelectionGroup
-						.append("rect")
-						.attr("x", startX).attr("width", endX - startX)
-						.attr("y", 0).attr("height", height);
-					cutSelection.style("opacity", 0.4);
-				}
 			}
 
 			setInterval(function () {
