@@ -22,7 +22,7 @@ yAxis = d3.svg.axis().scale(y).ticks(4).orient("right");
 audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, $http) {
 
 			$scope.file = {
-				url : audiofile
+				url : audioFile
 			};
 
 			$scope.playerButtonLabel = 'Play';
@@ -40,7 +40,10 @@ audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, 
 			var loadData = function () {
 				delete $http.defaults.headers.common['X-Requested-With'];
 				$http.get($scope.file.url, {
-					responseType : "arraybuffer"
+					responseType : "arraybuffer",
+          headers: {
+              'Access-Control-Allow-Origin': '*'
+          }
 				}).success(function (response) {
 					audioContext.decodeAudioData(response, function (buffer) {
 						//var source = context.createBufferSource();

@@ -4,7 +4,7 @@ Hello, find me in
 
 :javascript
   updateUrl = '#{admin_talk_path(id: resource.id)}';
-  audioFile = '#{vrmedia_url(resource, "-clean.mp3")}';
+  audioFile = '#{vrmedia_url(resource, "-clean.mp3", true)}';
   revisions = #{(resource.edit_config || []).to_json};
 
   console.log(audioFile);
