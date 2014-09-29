@@ -7,6 +7,7 @@ class Vrmedia < Struct.new(:app, :opts)
     return app.call(env) unless md = env['PATH_INFO'].match(PATTERN)
 
     # this is a horrible hack for chrom(e|ium) in development
+    # see http://stackoverflow.com/questions/21102690
     if Rails.env.development? and
       env['HTTP_USER_AGENT'].include?('Chrome')
       p file = env["PATH_INFO"].split('/').last
