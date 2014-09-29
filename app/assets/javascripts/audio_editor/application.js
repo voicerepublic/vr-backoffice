@@ -22,9 +22,10 @@ yAxis = d3.svg.axis().scale(y).ticks(4).orient("right");
 audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, $http) {
 
 			$scope.file = {
-				url : '841.mp3',
-				name : 'test'
+				url : audiofile
 			};
+
+			$scope.playerButtonLabel = 'Play';
 
 			var contextClass = (window.AudioContext ||
 				window.webkitAudioContext ||
@@ -64,11 +65,10 @@ audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, 
 			$scope.playFile = function () {
 				var oAudio = document.getElementById("audio1");
 				if (oAudio.paused) {
-					var oInput = document.getElementById('audiofile'); //text box
-					if (oInput.value) {
-						oAudio.play();
-					}
-				} else {
+					$scope.playerButtonLabel = 'Pause';
+					oAudio.play();
+				}else {
+					$scope.playerButtonLabel = 'Play';
 					oAudio.pause();
 				}
 			};
