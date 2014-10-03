@@ -21,10 +21,6 @@ height = 150 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%d-%b-%y").parse;
 var offsetX = 50;
-var x = d3.scale.linear().range([0, width]),
-y = d3.scale.linear().range([height, 0]),
-xAxis = d3.svg.axis().scale(x).tickSize(-height).tickSubdivide(true),
-yAxis = d3.svg.axis().scale(y).ticks(4).orient("right");
 
 audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, $http) {
 
@@ -60,7 +56,7 @@ audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, 
 						$scope.file.duration = buffer.duration;
 						var leftChannel = buffer.getChannelData(0); // Float32Array describing left channel
 						var downSize = new Array();
-						var reSizeFactor = 5000;
+						var reSizeFactor = parseInt(leftChannel.length / 10000);
 						for (var i = 0; i < leftChannel.length; i += reSizeFactor) {
 							downSize[i / reSizeFactor] = leftChannel[i];
 
@@ -250,6 +246,10 @@ audioCutter.directive('waveform', function () {
 				if (!downSize) {
 					return;
 				}
+				var x = d3.scale.linear().range([0, width]),
+				y = d3.scale.linear().range([height, 0]),
+				xAxis = d3.svg.axis().scale(x).ticks(scope.duration);
+				// yAxis = d3.svg.axis().scale(y).ticks(4).orient("right");
 
 				//x.domain([0, waveform.adapter.length]).rangeRound([0, 1024]);
 				x.domain([0, downSize.length]);
@@ -259,9 +259,9 @@ audioCutter.directive('waveform', function () {
 				.attr("class", "x axis")
 				.call(xAxis);
 
-				svg.append("g")
-				.attr("class", "y axis")
-				.call(yAxis)
+				// svg.append("g")
+				// .attr("class", "y axis")
+				// .call(yAxis)
 
 				var area = d3.svg.area()
 					.interpolate("monotone")
