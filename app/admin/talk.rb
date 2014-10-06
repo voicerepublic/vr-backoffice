@@ -1,5 +1,20 @@
 ActiveAdmin.register Talk do
 
+  controller do
+    before_action :add_date_to_last_revision, only: :update
+
+    def add_date_to_last_revision
+      # TODO resource, as well as @talk, are already available here
+      # check if we can manipulate one of these instead of
+      # manipulating the params object
+      if json = params[:talk][:edit_config]
+        data = JSON.parse(json)
+        data.last['date'] ||= Time.now.to_s
+        params[:talk][:edit_config] = JSON.unparse(data)
+      end
+    end
+  end
+
   # BEGIN CSV Import
   action_item only: :index do
     link_to 'Import CSV', :action => 'upload_csv'
