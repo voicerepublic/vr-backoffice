@@ -10,12 +10,11 @@ class Vrmedia < Struct.new(:app, :opts)
     # see http://stackoverflow.com/questions/21102690
     if Rails.env.development? and
       env['HTTP_USER_AGENT'].include?('Chrome')
-      p file = env["PATH_INFO"].split('/').last
-      p base = Settings.path_to_cloud
-      p Dir.pwd
-      p base = File.expand_path(base,Dir.pwd)
-      raise "`path_to_cloud` not directory!" unless File.directory?(base)      
-      p paths = %x[ find #{base} -name #{file} ].split("\n")      
+      file = env["PATH_INFO"].split('/').last
+      base = Settings.path_to_cloud
+      base = File.expand_path(base,Dir.pwd)
+      raise "`path_to_cloud` not directory!" unless File.directory?(base)
+      paths = %x[ find #{base} -name #{file} ].split("\n")
       return [ 200, {}, File.open(paths.first, 'r') ]
     end
 
