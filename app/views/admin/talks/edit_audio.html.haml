@@ -1,7 +1,7 @@
 :javascript
   updateUrl = '#{admin_talk_path(id: resource.id)}';
   audioFile = '#{vrmedia_url(resource, "-clean.mp3", true)}';
-  revisions = JSON.parse(#{(resource.edit_config || []).to_json});
+  revisions = JSON.parse(#{(resource.edit_config || "[]").to_json});
 
 = javascript_include_tag 'audio_editor/angular-min'
 = javascript_include_tag 'audio_editor/application'
@@ -12,7 +12,7 @@
       %waveform{:duration => "duration", :val => "data"}
   %audio#audio2{:hidden => "true", :src => "click.mp3"}
   %br/
-  %audio#audio1{"ng-src" => "{{file.url}}"}
+  %audio#audio1{"ng-src" => "{{file.url}}", :preload => "auto"}
     HTML5 audio is not supported
   %br/
   %input#audiofile{"ng-model" => "file.url", :style => "width:600px", :type => "text"}/
@@ -22,3 +22,10 @@
   %div
     Elapsed Time:
     %input#timeDisplay{"ng-model" => "currentTime", :type => "label"}
+    %button{"ng-click" => "saveRevision()"}save
+    %table
+      %tr{"ng-repeat" => "revision in revisions"}
+        %td {{revision.date}}
+        %td 
+          %button{"ng-click" => "returnToRevision($index)"}load
+          
