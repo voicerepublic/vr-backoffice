@@ -22,7 +22,7 @@ height = 150 - margin.top - margin.bottom;
 var parseDate = d3.time.format("%d-%b-%y").parse;
 var offsetX = 50;
 
-audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, $http) {
+audioCutter.controller('AudioController', ['$scope', '$http', '$window', function ($scope, $http, $window) {
 
 			$scope.file = {
 				url : audioFile
@@ -56,9 +56,9 @@ audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, 
 						$scope.file.duration = buffer.duration;
 						var leftChannel = buffer.getChannelData(0); // Float32Array describing left channel
 						var downSize = new Array();
-						var reSizeFactor = parseInt(leftChannel.length / 10000);
-						for (var i = 0; i < leftChannel.length; i += reSizeFactor) {
-							downSize[i / reSizeFactor] = leftChannel[i];
+						$scope.reSizeFactor = parseInt(leftChannel.length / 10000);
+						for (var i = 0; i < leftChannel.length; i += $scope.reSizeFactor) {
+							downSize[i / $scope.reSizeFactor] = leftChannel[i];
 
 						}
 						$scope.duration = buffer.duration;
@@ -80,22 +80,31 @@ audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, 
 				}
 			};
 
-			$scope.saveRevision = function(){			
-				$scope.revisions[$scope.revisions.length] = JSON.parse(JSON.stringify($scope.cutConfig));				
+			$scope.saveRevision = function(){
+				var revision = {};
+				revision.cutConfig = JSON.parse(JSON.stringify($scope.cutConfig));
+				$scope.revisions[$scope.revisions.length] = JSON.parse(JSON.stringify(revision));
 				//todo call save method;
-				//saveRevisions($scope.revisions);
+				saveRevisions($scope.revisions);
 			}
-			
+
+
+			$scope.returnToRevisionConfirm = function(index){
+				if($window.confirm('If you load an old revision all your unsaved changes will be discarded. Do you want to continue?')){
+					$scope.returnToRevision(index);
+				}
+			}
+
 			$scope.returnToRevision = function(index){
 				if($scope.revisions.length > 0){
-					$scope.cutConfig = JSON.parse(JSON.stringify($scope.revisions[index]));					
+					$scope.cutConfig = JSON.parse(JSON.stringify($scope.revisions[index])).cutConfig;
 					$scope.rePaintCutConfigs();
 				}
 			}
 
 			$scope.rePaintCutConfigs = function(){
 				var svg = d3.select("svg");
-				//svg.selectAll(".cut-config").remove();				
+				//svg.selectAll(".cut-config").remove();
 				var rects = svg.selectAll(".cut-config").data($scope.cutConfig)
 				rects.enter().append("g")
 						.attr("class", "cut-config")
@@ -107,6 +116,12 @@ audioCutter.controller('AudioController', ['$scope', '$http', function ($scope, 
 							return d.end / $scope.duration * width - d.start / $scope.duration * width;
 						}).attr("y", margin.top).attr("height", height);
 				rects.exit().remove();
+			}
+
+			$scope.loadLatestCutConfig = function(){
+				if($scope.revisions.length != 0){
+					$scope.returnToRevision($scope.revisions.length -1);
+				}
 			}
 
 			$scope.currentTime;
@@ -232,10 +247,10 @@ audioCutter.directive('waveform', function () {
 				scope.currentTime = currentTime;
 				scope.$apply();
 				var jumpTime = GetCurrentPositionCut(currentTime);
-				if (jumpTime != currentTime) {					
+				if (jumpTime != currentTime) {
 					scope.currentTime = jumpTime;
 					scope.$apply();
-					oAudio.currentTime = jumpTime;										
+					oAudio.currentTime = jumpTime;
 				}
 				var totaltime = oAudio.duration;
 				var res = scope.currentTime / totaltime * width
@@ -246,9 +261,12 @@ audioCutter.directive('waveform', function () {
 				if (!downSize) {
 					return;
 				}
+				var tickFormater = function(d){
+					return parseInt(d / scope.data.length * scope.duration);
+				}
 				var x = d3.scale.linear().range([0, width]),
 				y = d3.scale.linear().range([height, 0]),
-				xAxis = d3.svg.axis().scale(x).ticks(scope.duration);
+				xAxis = d3.svg.axis().scale(x).ticks(scope.duration).tickFormat(tickFormater);
 				// yAxis = d3.svg.axis().scale(y).ticks(4).orient("right");
 
 				//x.domain([0, waveform.adapter.length]).rangeRound([0, 1024]);
@@ -280,7 +298,9 @@ audioCutter.directive('waveform', function () {
 				.attr("transform", function () {
 					return "translate(0, " + offsetX + ")";
 				})
-				.attr("d", area)
+				.attr("d", area);
+
+				scope.loadLatestCutConfig();
 
 			}, true);
 		}

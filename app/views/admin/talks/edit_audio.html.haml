@@ -12,7 +12,7 @@
       %waveform{:duration => "duration", :val => "data"}
   %audio#audio2{:hidden => "true", :src => "click.mp3"}
   %br/
-  %audio#audio1{"ng-src" => "{{file.url}}", :preload => "auto"}
+  %audio#audio1{"ng-src" => "{{file.url}}"}
     HTML5 audio is not supported
   %br/
   %input#audiofile{"ng-model" => "file.url", :style => "width:600px", :type => "text"}/
@@ -24,8 +24,8 @@
     %input#timeDisplay{"ng-model" => "currentTime", :type => "label"}
     %button{"ng-click" => "saveRevision()"}save
     %table
-      %tr{"ng-repeat" => "revision in revisions"}
+      %tr{"ng-repeat" => "revision in revisions track by $index"}
         %td {{revision.date}}
-        %td 
-          %button{"ng-click" => "returnToRevision($index)"}load
-          
+        %td
+          %button{"ng-click" => "returnToRevisionConfirm($index)"}load
+

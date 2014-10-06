@@ -20,24 +20,24 @@
     fill: none;
     stroke-width: 1px;
   }
-    
+
   .cut-config {
     stroke: blue;
     fill: blue;
     stroke-width: 1px;
   }
-    
+
   .axis path,
   .axis line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
   }
-    
+
   .x.axis path {
     display: none;
   }
-   
+
   .line {
     fill: none;
     stroke: steelblue;
