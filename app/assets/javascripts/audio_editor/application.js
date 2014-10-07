@@ -1,4 +1,5 @@
 //= require d3
+//= require ./angular-min
 
 var audioCutter = angular.module('AudioCutter', []);
 
@@ -309,9 +310,9 @@ audioCutter.directive('waveform', function () {
 				.attr("d", area);
 
 				function zoom() {
-  				path.attr("transform", transform);
   				var xAxis = d3.select(".x.axis");
   				xAxis.call(scope.xAxis);
+  				path.attr("transform", transform);
 				}
 
 				scope.loadLatestCutConfig();

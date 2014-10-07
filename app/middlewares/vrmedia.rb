@@ -18,9 +18,10 @@ class Vrmedia < Struct.new(:app, :opts)
       return [ 200, {}, File.open(paths.first, 'r') ]
     end
 
-    p env
+    # Rails.logger.info env.inspect
 
-    location = env['REQUEST_URI'].sub(':444', '').sub(':3001', ':3000')
+    base = env['HTTP_REFERER'].sub('://', '\\:').split('/').first.sub('\\:', '://')
+    location = base.sub(':444', '').sub(':3001', ':3000') + env["PATH_INFO"]
     [ 302, { 'Location' => location }, [] ]
   end
 
