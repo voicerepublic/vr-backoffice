@@ -18,7 +18,7 @@ class Vrmedia < Struct.new(:app, :opts)
       return [ 200, {}, File.open(paths.first, 'r') ]
     end
 
-    p env
+    Rails.logger.info env.inspect
 
     location = env['REQUEST_URI'].sub(':444', '').sub(':3001', ':3000')
     [ 302, { 'Location' => location }, [] ]
