@@ -21,7 +21,7 @@ class Vrmedia < Struct.new(:app, :opts)
     # Rails.logger.info env.inspect
 
     base = env['HTTP_REFERER'].sub('://', '\\:').split('/').first.sub('\\:', '://')
-    location = base.sub(':444', '').sub(':3001', ':3000')
+    location = base.sub(':444', '').sub(':3001', ':3000') + env["PATH_INFO"]
     [ 302, { 'Location' => location }, [] ]
   end
 
