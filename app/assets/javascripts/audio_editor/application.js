@@ -1,4 +1,5 @@
 //= require d3
+//= require ./angular-min
 
 var audioCutter = angular.module('AudioCutter', []);
 
