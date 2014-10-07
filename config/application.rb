@@ -32,5 +32,9 @@ module VoicerepublicBackoffice
 
     config.middleware.use 'EndlessAssimilation'
     config.middleware.use 'Vrmedia'
+
+    config.assets.precompile += %w( audio_editor/angular-min.js )
+    config.assets.precompile += %w( audio_editor/application.css )
+
   end
 end
