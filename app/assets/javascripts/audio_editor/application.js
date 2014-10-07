@@ -41,7 +41,9 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 				var audioContext = new contextClass();
 			}
 
-			var loadData = function () {
+			$scope.width = $window.innerWidth - margin.left - margin.right;
+
+			$scope.loadData = function () {
 				delete $http.defaults.headers.common['X-Requested-With'];
 				$http.get($scope.file.url, {
 					responseType : "arraybuffer",
@@ -111,9 +113,9 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 						.style("opacity", 0.4)
 						.append("rect")
 						.attr("x", function(d){
-							return d.start / $scope.duration * width + margin.left;
+							return d.start / $scope.duration * $scope.width + margin.left;
 						}).attr("width", function(d){
-							return d.end / $scope.duration * width - d.start / $scope.duration * width;
+							return d.end / $scope.duration * $scope.width - d.start / $scope.duration * $scope.width;
 						}).attr("y", margin.top).attr("height", height);
 				rects.exit().remove();
 			}
@@ -128,7 +130,7 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 
 			$scope.cutConfig = new Array();
 
-			loadData();
+			$scope.loadData();
 
 		}
 	]);
@@ -142,7 +144,7 @@ audioCutter.directive('waveform', function () {
 			// set up initial svg object
 			var svg = d3.select(element[0])
 				.append("svg")
-				.attr("width", width + margin.left + margin.right)
+				.attr("width", scope.width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom)
 				.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
@@ -180,7 +182,7 @@ audioCutter.directive('waveform', function () {
 				if(scope.data == null){
 					return;
 				}
-				xMouseDown = (d3.mouse(this)[0]- margin.left) / width * scope.duration;
+				xMouseDown = (d3.mouse(this)[0]- margin.left) / scope.width * scope.duration;
 				for (var i = 0; i < scope.cutConfig.length; i++) {
 					if (scope.cutConfig[i].start <= xMouseDown && scope.cutConfig[i].end >= xMouseDown) {
 						scope.cutConfig.splice(i, 1);
@@ -196,7 +198,7 @@ audioCutter.directive('waveform', function () {
 				if (xMouseDown == -1) {
 					return true;
 				}
-				var xOut = (d3.mouse(this)[0] - margin.left) / width * scope.duration;
+				var xOut = (d3.mouse(this)[0] - margin.left) / scope.width * scope.duration;
 				var currentCutConfig = new Object();
 				if (xMouseDown < xOut) {
 					currentCutConfig.start = xMouseDown;
@@ -253,7 +255,7 @@ audioCutter.directive('waveform', function () {
 					oAudio.currentTime = jumpTime;
 				}
 				var totaltime = oAudio.duration;
-				var res = scope.currentTime / totaltime * width
+				var res = scope.currentTime / totaltime * scope.width
 					hoverLine.attr("x1", res).attr("x2", res).style("opacity", 1);
 			}, 500);
 
@@ -264,18 +266,24 @@ audioCutter.directive('waveform', function () {
 				var tickFormater = function(d){
 					return parseInt(d / scope.data.length * scope.duration);
 				}
-				var x = d3.scale.linear().range([0, width]),
-				y = d3.scale.linear().range([height, 0]),
-				xAxis = d3.svg.axis().scale(x).ticks(scope.duration).tickFormat(tickFormater);
+				var x = d3.scale.linear().range([0, scope.width]),
+				y = d3.scale.linear().range([height, 0]);
+				scope.xAxis = d3.svg.axis().scale(x).ticks(scope.duration).tickFormat(tickFormater);
 				// yAxis = d3.svg.axis().scale(y).ticks(4).orient("right");
 
 				//x.domain([0, waveform.adapter.length]).rangeRound([0, 1024]);
 				x.domain([0, downSize.length]);
 				y.domain([d3.min(downSize), d3.max(downSize)]).rangeRound([offsetX, -offsetX]);
 
+				svg.call(d3.behavior.zoom().x(x).scaleExtent([1, 8]).on("zoom", zoom))
+
+				function transform(d) {
+  				return "translate(" + x(d[0]) + ", "+ offsetX+ ")";
+				}
+
 				svg.append("g")
 				.attr("class", "x axis")
-				.call(xAxis);
+				.call(scope.xAxis);
 
 				// svg.append("g")
 				// .attr("class", "y axis")
@@ -293,12 +301,18 @@ audioCutter.directive('waveform', function () {
 						return y(d)
 					});
 
-				svg.append("path")
+				 var path = svg.append("path")
 				.datum(downSize)
 				.attr("transform", function () {
 					return "translate(0, " + offsetX + ")";
 				})
 				.attr("d", area);
+
+				function zoom() {
+  				path.attr("transform", transform);
+  				var xAxis = d3.select(".x.axis");
+  				xAxis.call(scope.xAxis);
+				}
 
 				scope.loadLatestCutConfig();
 
