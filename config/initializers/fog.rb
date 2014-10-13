@@ -1,5 +1,4 @@
-fog_config = Settings.fog ? Settings.fog.storage.to_hash : {}
-Storage = Fog::Storage.new(fog_config)
+Storage = Fog::Storage.new(Settings.fog.storage.to_hash)
 
 # when using local storage provider, fake expiring urls with public
 # urls
