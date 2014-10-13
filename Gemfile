@@ -19,6 +19,7 @@ gem 'd3_rails'
 # updating private_pub gem!
 # see https://github.com/munen/voicerepublic_backoffice/commit/ca0b016e01481bd500
 gem 'private_pub'
+gem 'fog'
 
 group :doc do
   gem 'sdoc', require: false

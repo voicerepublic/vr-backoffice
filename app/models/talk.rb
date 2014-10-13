@@ -96,6 +96,17 @@ class Talk < ActiveRecord::Base
     []
   end
 
+  def media_storage
+    @media_storage ||=
+      Storage.directories.new(key: Settings.storage.media, prefix: uri)
+  end
+
+  def ephemeral_url(variant='-clean.mp3')
+    filename = "#{uri}/#{id}#{variant}"
+    head = media_storage.files.new(key: filename)
+    head.url(2.hours.from_now)
+  end
+
   private
 
   # Assemble `starts_at` from `starts_at_date` and `starts_at_time`.

@@ -31,7 +31,6 @@ module VoicerepublicBackoffice
     # config.i18n.default_locale = :de
 
     config.middleware.use 'EndlessAssimilation'
-    config.middleware.use 'Vrmedia'
 
   end
 end
