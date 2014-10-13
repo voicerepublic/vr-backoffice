@@ -123,6 +123,9 @@ ActiveAdmin.register Talk do
       end
     end
     attributes_table do
+      row :listen do
+        audio(src: vrmedia_url(resource, '-clean.mp3', true), controls: true)
+      end
       row :id
       row :uri do
         url = "//#{request.host_with_port}/talk/#{talk.id}".
