@@ -123,6 +123,9 @@ ActiveAdmin.register Talk do
       end
     end
     attributes_table do
+      row :listen do
+        audio(src: resource.ephemeral_url, controls: true)
+      end
       row :id
       row :uri do
         url = "//#{request.host_with_port}/talk/#{talk.id}".
@@ -143,8 +146,8 @@ ActiveAdmin.register Talk do
         talk.collect
       end
       row 'download' do
-        link_to('ogg', vrmedia_url(talk, '-clean.ogg'), target: '_blank') +
-          ' ' + link_to('mp3', vrmedia_url(talk), target: '_blank')
+        link_to('ogg', talk.ephemeral_url('-clean.ogg'), target: '_blank') +
+          ' ' + link_to('mp3', talk.ephemeral_url, target: '_blank')
       end
       row :started_at
       row :format
