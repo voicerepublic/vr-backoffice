@@ -24,6 +24,7 @@
     %button{"ng-click" => "saveRevision()"}save
     %table
       %tr{"ng-repeat" => "revision in revisions track by $index"}
-        %td {{revision.date}}
+        %td
+          {{revision.date}}
         %td
           %button{"ng-click" => "returnToRevisionConfirm($index)"}load

@@ -42,7 +42,8 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 				var audioContext = new contextClass();
 			}
 
-			$scope.width = $window.innerWidth - margin.left - margin.right;
+			//$scope.width = $window.innerWidth - margin.left - margin.right;
+			$scope.width = width;
 
 			$scope.loadData = function () {
 				delete $http.defaults.headers.common['X-Requested-With'];
@@ -276,7 +277,7 @@ audioCutter.directive('waveform', function () {
 				x.domain([0, downSize.length]);
 				y.domain([d3.min(downSize), d3.max(downSize)]).rangeRound([offsetX, -offsetX]);
 
-				svg.call(d3.behavior.zoom().x(x).scaleExtent([1, 8]).on("zoom", zoom))
+				//svg.call(d3.behavior.zoom().x(x).scaleExtent([1, 8]).on("zoom", zoom))
 
 				function transform(d) {
   				return "translate(" + x(d[0]) + ", "+ offsetX+ ")";
@@ -309,11 +310,11 @@ audioCutter.directive('waveform', function () {
 				})
 				.attr("d", area);
 
-				function zoom() {
+				/*function zoom() {
   				var xAxis = d3.select(".x.axis");
   				xAxis.call(scope.xAxis);
   				path.attr("transform", transform);
-				}
+				}*/
 
 				scope.loadLatestCutConfig();
 
