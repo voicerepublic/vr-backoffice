@@ -43,4 +43,29 @@ body.edit_audio {
         stroke-width: 1.5px;
     }
 
+    .black_overlay{
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        z-index:1001;
+        -moz-opacity: 0.8;
+        opacity:.80;
+        filter: alpha(opacity=80);
+    }
+    .white_content {
+        position: absolute;
+        top: 40%;
+        left: 40%;
+        width: 100px;
+        height: 50px;
+        padding: 16px;
+        border: 3px solid;
+        background-color: white;
+        z-index:1002;
+        overflow: auto;
+    }
+
 }

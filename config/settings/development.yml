@@ -2,5 +2,5 @@ fog:
   storage:
     provider: Local
     # this needs to point to your main apps cloud directory
-    local_root: ../dev/tmp/spec/cloud
+    local_root: ../voicerepublic/tmp/spec/cloud
     endpoint: http://localhost:3000/system/cloud

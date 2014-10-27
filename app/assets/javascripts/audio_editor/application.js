@@ -32,6 +32,8 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 			$scope.playerButtonLabel = 'Play';
 			$scope.revisions = revisions;
 
+			$scope.loadingData = false;
+
 			var contextClass = (window.AudioContext ||
 				window.webkitAudioContext ||
 				window.mozAudioContext ||
@@ -46,6 +48,7 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 			$scope.width = width;
 
 			$scope.loadData = function () {
+				$scope.loadingData = true;
 				delete $http.defaults.headers.common['X-Requested-With'];
 				$http.get($scope.file.url, {
 					responseType : "arraybuffer",
@@ -67,6 +70,7 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 						}
 						$scope.duration = buffer.duration;
 						$scope.data = downSize;
+						$scope.loadingData = false;
 						$scope.$apply();
 					});
 				});
@@ -75,6 +79,11 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 
 			$scope.playFile = function () {
 				var oAudio = document.getElementById("audio1");
+				if(oAudio.src != $scope.file.url)
+				{
+					//because ng-src doesn't seem to bind properly for audio element
+					oAudio.src = $scope.file.url;
+				}
 				if (oAudio.paused) {
 					$scope.playerButtonLabel = 'Pause';
 					oAudio.play();
@@ -88,7 +97,6 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 				var revision = {};
 				revision.cutConfig = JSON.parse(JSON.stringify($scope.cutConfig));
 				$scope.revisions[$scope.revisions.length] = JSON.parse(JSON.stringify(revision));
-				//todo call save method;
 				saveRevisions($scope.revisions);
 			}
 
@@ -109,6 +117,8 @@ audioCutter.controller('AudioController', ['$scope', '$http', '$window', functio
 			$scope.rePaintCutConfigs = function(){
 				var svg = d3.select("svg");
 				//svg.selectAll(".cut-config").remove();
+				//hack because exit.remove doesn't work as expected
+				svg.selectAll(".cut-config").remove()
 				var rects = svg.selectAll(".cut-config").data($scope.cutConfig)
 				rects.enter().append("g")
 						.attr("class", "cut-config")
@@ -256,7 +266,7 @@ audioCutter.directive('waveform', function () {
 					scope.$apply();
 					oAudio.currentTime = jumpTime;
 				}
-				var totaltime = oAudio.duration;
+				var totaltime = scope.duration;
 				var res = scope.currentTime / totaltime * scope.width
 					hoverLine.attr("x1", res).attr("x2", res).style("opacity", 1);
 			}, 500);

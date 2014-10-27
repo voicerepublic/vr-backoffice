@@ -6,12 +6,15 @@
 = javascript_include_tag 'audio_editor/application'
 
 %div{:"ng-controller" => "AudioController", :"ng-app" => "AudioCutter"}
+  %div#light.white_content{"ng-show" => "loadingData"}
+    Loading Please Wait...
+  %div#fade.black_overlay{"ng-show" => "loadingData"}
   .outer
     #inner.inner
       %waveform{:duration => "duration", :val => "data"}
   %audio#audio2{:hidden => "true"}
   %br/
-  %audio#audio1{"ng-src" => "{{file.url}}"}
+  %audio#audio1{"ng-src" => "file.url"}
     HTML5 audio is not supported
   %br/
   %input#audiofile{"ng-model" => "file.url", :style => "width:600px", :type => "text"}/
