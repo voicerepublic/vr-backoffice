@@ -1,6 +1,25 @@
 ActiveAdmin.register Talk do
 
+  filter :id
+  filter :uri
+  filter :slug
+  filter :title
+  filter :featured_from
+  filter :starts_at
+  filter :ends_at
+  filter :started_at
+  filter :ended_at
+  filter :collect, label: 'record'
+  filter :teaser
+  filter :description
+  filter :speakers
+  filter :language, as: :select, collection: %w(en de fr it es)
+
   controller do
+    def scoped_collection
+      Talk.includes(:venue)
+    end
+
     before_action :add_date_to_last_revision, only: :update
 
     def add_date_to_last_revision
