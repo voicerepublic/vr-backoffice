@@ -9,6 +9,7 @@
 #= require d3
 #= require faye-authentication
 #= require talks
+#= require metrics
 #
 #= require dashboard/array
 #= require dashboard/faye_ttl

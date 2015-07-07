@@ -130,3 +130,11 @@ html, body {
 #footer {
   display: none;
 }
+
+.admin_metrics {
+    #main_content,
+    #d3chart {
+        width: 100%;
+        height: 80%;
+    }
+}

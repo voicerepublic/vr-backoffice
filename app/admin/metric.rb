@@ -19,7 +19,9 @@ ActiveAdmin.register Metric do
 
   # make show render partial app/views/admin/metrics/_show
   show do
-    render 'show'
+    datapoints = resource.map(&:for_json).to_json
+    script "window.datapoints = #{datapoints}".html_safe
+    svg id: 'd3chart'
   end
 
   controller do
