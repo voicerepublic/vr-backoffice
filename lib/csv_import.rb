@@ -26,6 +26,7 @@ module CsvImport
       # the transformer is not defensive enough
       # transformers.each { |field, method| obj.send(method, field) }
       transformers.each do |field, method|
+        next unless row_hash.include? field
         begin
           obj.send(method, field)
         rescue Exception => e

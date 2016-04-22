@@ -53,7 +53,7 @@ ActiveAdmin.register Talk do
       begin
         file = params[:dump][:file]
         defaults = { state: :prelive }
-        transformers = { description: 'html2md' }
+        transformers = { description: 'html2md', image: 'load_remote_attachment' }
 
         message = Talk.import(file, defaults, transformers)
         if message[:created] or message[:updated]
