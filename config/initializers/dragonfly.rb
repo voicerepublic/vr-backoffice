@@ -12,8 +12,8 @@ Dragonfly.app.configure do
   url_host Settings.root_url
 
   datastore :file,
-    root_path: Rails.root.join('public/system/dragonfly', Rails.env),
-    server_root: Rails.root.join('public')
+    root_path: Pathname.new("/home/app/app/shared/public/system/dragonfly/#{Rails.env}"),
+    server_root: Pathname.new("/home/app/app/shared/public")
 end
 
 # Logger
