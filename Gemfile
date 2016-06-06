@@ -37,7 +37,7 @@ gem 'reverse_markdown'
 gem 'unicorn'
 gem 'activeadmin', github: 'activeadmin/activeadmin'
 gem 'rails_config'
-gem 'activeadmin-dragonfly', github: 'stefanoverna/activeadmin-dragonfly'
+gem 'activeadmin-dragonfly', github: 'DrawGun/activeadmin-dragonfly'
 gem 'dragonfly', '1.0.12'           # used for images
 gem 'acts-as-taggable-on'
 
