@@ -163,8 +163,8 @@ class Talk < ActiveRecord::Base
   def load_remote_attachment(field)
     remote_url = talk.dragonfly_attachments[field].job.content.data if talk.dragonfly_attachments[field]
     return unless remote_url
-    @remote_attachments = {} unless @remote_attachments
-    @remote_attachments[remote_url] = Dragonfly.app.fetch_url(remote_url) unless @remote_attachments.include? remote_url
+    @remote_attachments ||= {}
+    @remote_attachments[remote_url] ||= Dragonfly.app.fetch_url(remote_url)
     self.send("#{field}=", @remote_attachments[remote_url])
   end
 
