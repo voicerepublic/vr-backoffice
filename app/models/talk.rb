@@ -24,6 +24,8 @@
 # * series_id [integer] - belongs to :series
 class Talk < ActiveRecord::Base
 
+  include ApplicationHelper
+
   extend ::CsvImport
 
   STATES = %w( pending prelive live postlive processing archived suspended )
@@ -108,6 +110,9 @@ class Talk < ActiveRecord::Base
 
   scope :uncategorized, -> { where(icon: 'default') }
 
+  scope :prelive_or_live, -> { where('talks.state in (?)', [:prelive, :live]) }
+  scope :ordered, -> { order('starts_at ASC') }
+
   def effective_duration # in seconds
     ended_at - started_at
   end
@@ -166,6 +171,10 @@ class Talk < ActiveRecord::Base
     @remote_attachments ||= {}
     @remote_attachments[remote_url] ||= Dragonfly.app.fetch_url(remote_url)
     self.send("#{field}=", @remote_attachments[remote_url])
+  end
+
+  def self_url
+    public_url(self, Settings.site_root)
   end
 
   private

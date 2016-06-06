@@ -18,7 +18,8 @@ ActiveAdmin.register Device do
                     target
                     loglevel
                     report_interval
-                    heartbeat_interval ).map(&:to_sym)
+                    heartbeat_interval
+                    options ).map(&:to_sym)
 
   # sidebar :actions, only: :show do
   #   button t('.shutdown')
@@ -78,8 +79,17 @@ ActiveAdmin.register Device do
       f.input :loglevel, hint: t('.hint_loglevel'), as: :select, collection: LOGLEVELS
       f.input :report_interval
       f.input :heartbeat_interval
+      f.input :options
     end
     f.actions
+  end
+
+  controller do
+    after_action :propagate_restart, only: :update
+
+    def propagate_restart
+      Faye.publish_to "/device/#{resource.identifier}", event: 'exit'
+    end
   end
 
 end

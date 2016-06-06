@@ -7,6 +7,14 @@ ActiveAdmin.register User do
   actions :all, except: [:destroy]
 
   action_item only: :show do
+    link_to t('.tweetplan'), tweetplan_admin_user_path(user)
+  end
+
+  member_action :tweetplan, method: :get do
+    @talks = resource.talks.prelive_or_live.ordered
+  end
+
+  action_item only: :show do
     link_to t('.grant'), credits_admin_user_path(user)
   end
 
