@@ -12,6 +12,14 @@ errbit:
   enabled: false
   api_key: 'this will be set on the stages in app/shared/config/settings.local.yml'
   environment: 'development'
+storage:
+  images: vr-dev-images
+fog:
+  storage:
+    provider: AWS
+    aws_access_key_id: needs to be set
+    aws_secret_access_key: needs to be set
+    region: eu-central-1
 # set in local!
 root_url: 'http://localhost:3000'
 site_root: 'http://localhost:3000'

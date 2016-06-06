@@ -39,6 +39,7 @@ gem 'activeadmin', github: 'activeadmin/activeadmin'
 gem 'rails_config'
 gem 'activeadmin-dragonfly', github: 'voicerepublic/activeadmin-dragonfly'
 gem 'dragonfly', '1.0.12'           # used for images
+gem 'dragonfly-s3_data_store', '~> 1.2'
 gem 'acts-as-taggable-on'
 
 group :production do
