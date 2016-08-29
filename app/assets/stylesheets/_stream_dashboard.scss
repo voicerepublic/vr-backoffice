@@ -1,5 +1,5 @@
 .admin_dashboard #active_admin_content {
-  padding: 0;
+    padding: 0;
 }
 
 .clearfix::before,.clearfix::after {
@@ -26,9 +26,9 @@
     position: relative;
     background: #ddd;
     padding-left: 24px;
-    color: $talk-dark;
+    color: #29292b;
     overflow-x: hidden;
-    margin:0;
+    margin: 0;
     $venue-column-width: 360px;
     #dashboard {
         display: flex;
@@ -114,25 +114,24 @@
             }
         }
         .venue-state {
-                background: $vr-beige;
-                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-                border-radius: 2px;
-                padding: 2px 4px;
-                margin-right: 4px;
-                &.connected, &.live {
-                    background: $success-color;
-                }
-
+            background: $vr-beige;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+            padding: 2px 4px;
+            margin-right: 4px;
+            &.connected, &.live {
+                background: $success-color;
+            }
         }
         .device-type, .device-state, .device-name, .server-id {
             background: #ddd;
-            border-radius:2px;
-            padding:0px 4px;
-                margin-right: 4px;
+            border-radius: 2px;
+            padding: 0px 4px;
+            margin-right: 4px;
         }
         .device-name {
-            background:none;
-            border:1px solid #ddd;
+            background: none;
+            border: 1px solid #ddd;
         }
         .play-button-holder {
             padding: 16px;
@@ -142,7 +141,7 @@
                 width: 44px;
                 height: 44px;
                 border: 1px solid #ccc;
-                margin:0;
+                margin: 0;
                 border-radius: 50%;
                 color: #ccc;
                 padding: 12px;
@@ -165,27 +164,24 @@
             }
         }
         .info-box {
-
             margin-left: 77px;
             height: 76px;
-
             .listener-icon {
                 opacity: .5;
                 margin-right: 3px;
             }
-
             .venue-info, .device-info {
-                border-bottom:1px solid #ccc;
+                border-bottom: 1px solid #ccc;
                 padding-left: 6px;
             }
             .venue-info {
                 height: 33px;
-                padding-top:5px;
+                padding-top: 5px;
             }
             .device-info,.server-info {
                 height: 22px;
-                padding-top:2px;
-                padding-left:6px;
+                padding-top: 2px;
+                padding-left: 6px;
             }
             .device-heartbeat-holder,.server-heartbeat-holder {
                 // background:rgba(orange,.3);
@@ -195,17 +191,13 @@
                 display: inline-block;
                 text-align: left;
                 margin-top: -2px;
-                border-left:1px solid $steel;
+                border-left: 1px solid $steel;
             }
-
-
             .device-heartbeat, .server-heartbeat {
                 background: $success-color;
                 height: 21px;
                 display: inherit;
             }
-
-
         }
         .server-status, .connection-status {
             height: 6px;
@@ -222,10 +214,10 @@
         .server-status {
             border-bottom-left-radius: 3px;
         }
-
         .top-row {
             // margin-bottom: 12px;
             //padding: 12px;
+       
         }
         .bottom-row {
             border-top: 2px solid white;
@@ -235,7 +227,7 @@
         height: 80px;
         position: absolute;
         margin-left: 50px;
-        float:left;
+        float: left;
         width: 100%;
         .time-slot-title {
             font-size: 10px;
@@ -263,13 +255,19 @@
         }
     }
     #time-grid {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none;           /* Non-prefixed version, currently
-                                  not supported by any browser */
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Chrome/Safari/Opera */
+        -khtml-user-select: none;
+        /* Konqueror */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently
+           not supported by any browser */
         position: absolute;
         width: 2000px;
         cursor: -webkit-grab;
@@ -302,7 +300,7 @@
         border-bottom: 1px solid rgba(white, 0.5);
         width: 100%;
         margin-bottom: 6px;
-        position:relative;
+        position: relative;
     }
     .point-in-time {
         width: 0;
