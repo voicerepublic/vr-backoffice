@@ -242,7 +242,7 @@ class Talk < ActiveRecord::Base
   end
 
   def update_popularity?
-    penalty_changed? && state == 'archived'
+    penalty_changed? && !processed_at.nil?
   end
 
   def schedule_popularity_update
