@@ -82,9 +82,11 @@ class Talk < ActiveRecord::Base
 
   before_save :set_venue
   before_save :set_icon, if: :tag_list_changed?
+  before_save :schedule_popularity_update, if: :update_popularity?
   after_save :generate_flyer!, if: :generate_flyer?
   after_save :schedule_processing_override, if: :process_override?
   after_save :schedule_processing_slides, if: :process_slides?
+
 
   validate :series_id do
     begin
@@ -237,6 +239,14 @@ class Talk < ActiveRecord::Base
 
   def set_description_as_html
     self.description_as_html = MARKDOWN.render(description)
+  end
+
+  def update_popularity?
+    penalty_changed? && state == 'archived'
+  end
+
+  def schedule_popularity_update
+    Delayed::Job.enqueue UpdatePopularity.new(id: id), queue: 'trigger', run_at: 5.minutes.from_now
   end
 
 end
