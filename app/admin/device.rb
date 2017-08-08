@@ -158,6 +158,22 @@ ActiveAdmin.register Device do
             device.device_reports.order('created_at DESC').first.try(:data)
           end
         end
+        panel "Demo Component" do
+          div id: 'device-root' do
+            script do
+                x = <<-EOF
+
+                fayeUrl = '#{Settings.faye.server}';
+
+                fayeClient = new Faye.Client(fayeUrl);
+                fayeExtension = new FayeAuthentication(fayeClient);
+                fayeClient.addExtension(fayeExtension);
+
+                EOF
+                x.html_safe
+            end
+          end
+        end
         active_admin_comments
         script src: Settings.faye.server + '/client.js'
         script do
@@ -166,6 +182,7 @@ ActiveAdmin.register Device do
         end
       end
     end
+     script src: '/js/app.js'
   end
 
   form do |f|
@@ -197,4 +214,5 @@ ActiveAdmin.register Device do
     end
   end
 
+  
 end
