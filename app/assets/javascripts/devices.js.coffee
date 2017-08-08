@@ -20,7 +20,8 @@ $ ->
 
   append = (text) ->
     bottom.before($("<div>").text(text))
-    log.scrollTop(if log[0] then log[0].scrollHeight else 0)
+    if log[0]?
+      log.scrollTop(log[0].scrollHeight)
 
   $('#code').keyup (event) ->
     if event.keyCode == 13
