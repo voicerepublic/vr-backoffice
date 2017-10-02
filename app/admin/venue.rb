@@ -20,7 +20,7 @@ ActiveAdmin.register Venue do
     end
   end
 
-  permit_params :name, :lat, :long, :options, flags: []
+  permit_params :name, :lat, :long, :options, :facebook_live_url, flags: []
 
   index do
     selectable_column
@@ -127,6 +127,7 @@ ActiveAdmin.register Venue do
       f.input :long
       f.input :options, input_html: { rows: 6 },
               hint: "Boolean flags will be set/overriden by the checkboxes below."
+      f.input :facebook_live_url, hint: "Facebook terminates streams longer than 4 hours." 
       # FIXME selected options are not properly checkmarked
       f.input :flags, as: :check_boxes, collection: Venue::FLAGS,
               member_label: :humanize,
