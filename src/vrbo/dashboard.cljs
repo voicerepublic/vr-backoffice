@@ -18,11 +18,19 @@
 (enable-console-print!)
 
 ;; ------------------------------
+;; constants
+
+(def interval 200)
+
+;; ------------------------------
 ;; state
 
 (defonce state (atom {:line-mapping {}
                       :lines {}
-                      :players {}}))
+                      :players {}
+                      :venue-briefing {}
+                      :now {}
+                      :then {}}))
 
 ;; ------------------------------
 ;; data helpers
@@ -63,6 +71,15 @@
 
 (defn window-size []
   (- (window-end) (window-start)))
+
+(defn venue-briefing []
+  (@state :venue-briefing))
+
+(defn then []
+  (@state :then))
+
+(defn set-then [time]
+  (assoc state :then time))
 
 ;; TODO resolve code duplication in the following 2 functions
 (defn time-position
@@ -249,20 +266,31 @@
 ;(defn jsx->clj [x]
 ;  (into {} (for [k (.keys js/Object x)] [k (aget x k)])))
 
-(swap! state assoc-in [:device-mapping] (js->clj (.. js/window -mappings -devices)))
-
 ;;(dbg "venue mapping" (js->clj (.. js/window -mappings -venues)))
 
 ;;(dbg "briefings" (js->clj (.. js/window -briefings)))
+(defn update-loop []
+  (js/requestAnimationFrame update-loop)
+  (let [now (.now js/Date)
+        delta (- now (then))]
+    (when (> delta interval)
+      (swap! state assoc :now (js/moment))
+      (set-then (- now (mod delta interval))))))
 
 ;;(dbg "device-mapping" (:device-mapping @state))
+(defn initialize-dashboard
+  []
+  (swap! state assoc
+         :device-mapping (js->clj (.. js/window -mappings -devices))
+         :venue-briefing (js->clj (.. js/window -briefings -venues) :keywordize-keys true)
+         :then (atom (.now js/Date))
+         :now (js/moment))
+  (update-loop))
 
 (defn merge-into-state [key data]
   (let [line-key (line-lookup key)]
     ;;(prn "Merge" (str key) "/" (str line-key) "with" (str data))
     (swap! state update-in [:lines line-key] merge (assoc data :key line-key))))
-
-(def venue-briefing (js->clj (.. js/window -briefings -venues) :keywordize-keys true))
 
 (defn update-venue [venue]
   (let [slug      (venue :slug)
@@ -273,7 +301,7 @@
     (swap! state assoc-in [:line-mapping token] slug)
     (merge-into-state (venue :slug) venue)))
 
-(doall (map update-venue venue-briefing))
+(doall (map update-venue (venue-briefing)))
 
 ;; -------------------------
 ;; message handlers
@@ -343,26 +371,6 @@
   (dbg "CONNECTION EVENT OUT" data)
   )
 
-;; ------------------------------
-;; update loop at exactly 30fps
-
-;;(def fps 30)
-(def fps 5)
-(def interval (/ 1000 fps))
-
-(defonce then (atom (.now js/Date)))
-(swap! state assoc :now (js/moment))
-
-(defn update-loop []
-  (js/requestAnimationFrame update-loop)
-  (let [now (.now js/Date)
-        delta (- now @then)]
-    (when (> delta interval)
-      (swap! state assoc :now (js/moment))
-      (reset! then (- now (mod delta interval))))))
-
-(update-loop)
-
 ;; -------------------------
 ;; init helpers
 
@@ -377,6 +385,7 @@
 ;; initialize
 
 (defn init! []
+  (initialize-dashboard)
   (mount-root))
 
 (subscribe "/report"            client-report-handler)

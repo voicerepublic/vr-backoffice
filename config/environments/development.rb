@@ -38,4 +38,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # Enables hot reloading when changing files in app/admin 
+  config.reload_classes_only_on_change = true
+  config.watchable_dirs[File.join(config.root, "app/admin")] = ["rb"]
 end
