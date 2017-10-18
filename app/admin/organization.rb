@@ -62,28 +62,6 @@ ActiveAdmin.register Organization do
       row :featured_until
       row :description_as_html
     end
-    panel 'Devices' do
-      table do
-        tr do
-          th 'Name'
-          th 'Type'
-          th 'Subtype'
-          th 'Identifier'
-          th 'State'
-          th 'Paired At'
-        end
-        organization.devices.each do |device|
-          tr do
-            td link_to(device.name, [:admin, device])
-            td device.type
-            td device.subtype
-            td device.identifier
-            td device.state
-            td device.paired_at
-          end
-        end
-      end
-    end
     panel 'Members' do
       table do
         tr do
@@ -91,6 +69,30 @@ ActiveAdmin.register Organization do
         end
         organization.users.each do |user|
           td link_to(user.full_name, [:admin, user])
+        end
+      end
+    end
+    panel 'Devices' do
+      table do
+        tr do
+          th 'Name'
+          th 'Type'
+          th 'Subtype'
+          th 'Identifier'
+          th 'Release'
+          th 'Version'
+          th 'Disappeared At'
+        end
+        organization.devices.each do |device|
+          tr do
+            td link_to(device.name, [:admin, device])
+            td device.type
+            td device.subtype
+            td device.identifier
+            td device.release
+            td device.version
+            td device.disappeared_at
+          end
         end
       end
     end

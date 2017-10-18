@@ -61,7 +61,7 @@ ActiveAdmin.register Device do
     column :version
     column :target
     column :release
-    column :public_ip_address
+    column :organization
     column :identifier
     column :pairing_code
     column :disappeared_at do |d|
@@ -71,10 +71,10 @@ ActiveAdmin.register Device do
         d.disappeared_at
       end
     end
-    column :state do |device|
-      span device.state, class: 'status_tag '+device.state
-    end
-    column :updated_at
+    #column :state do |device|
+    #  span device.state, class: 'status_tag '+device.state
+    #end
+    #column :updated_at
     actions
   end
 
@@ -214,5 +214,5 @@ ActiveAdmin.register Device do
     end
   end
 
-  
+
 end
