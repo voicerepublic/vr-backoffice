@@ -6,7 +6,7 @@ set :rbenv_ruby, '2.1.2'
 set :rbenv_ruby_version, "2.1.2"
 
 set :application, 'voicerepublic_backoffice'
-set :repo_url, 'git@github.com:munen/voicerepublic_backoffice.git'
+set :repo_url, 'git@gitlab.com:voicerepublic/backoffice.git'
 
 set :ssh_options, { forward_agent: true }
 
