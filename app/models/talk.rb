@@ -24,6 +24,8 @@
 # * series_id [integer] - belongs to :series
 class Talk < ActiveRecord::Base
 
+  QUEUE = 'mail'
+
   class << self
     def briefing
       within(4.hours.ago, 6.hours.from_now).map(&:attributes)
@@ -207,7 +209,7 @@ class Talk < ActiveRecord::Base
   end
 
   def schedule_processing_override
-    Delayed::Job.enqueue ProcessOverride.new(id: id), queue: 'audio'
+    Delayed::Job.enqueue ProcessOverride.new(id: id), queue: QUEUE
   end
 
   def process_slides?
@@ -215,7 +217,7 @@ class Talk < ActiveRecord::Base
   end
 
   def schedule_processing_slides
-    Delayed::Job.enqueue ProcessSlides.new(id: id), queue: 'audio'
+    Delayed::Job.enqueue ProcessSlides.new(id: id), queue: QUEUE
   end
 
   def related_talk_id_is_talk?
@@ -232,7 +234,7 @@ class Talk < ActiveRecord::Base
   end
 
   def generate_flyer!
-    Delayed::Job.enqueue GenerateFlyer.new(id: id), queue: 'audio'
+    Delayed::Job.enqueue GenerateFlyer.new(id: id), queue: QUEUE
   end
 
   def set_description_as_html
