@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.11.1'
 gem 'pg'
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 5.0.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'haml-rails'
@@ -17,10 +17,8 @@ gem 'd3_rails'
 gem 'c3-rails'
 gem 'faye-authentication', github: 'branch14/faye-authentication'
 gem 'devise'
-# sprockets is locked so that it does not update by accident to v3 which will
-# crash capistrano deployment currently
-gem 'sprockets', '2.12.3'
-
+gem 'sprockets', '~> 3.0'
+gem 'mime-types'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # optional
