@@ -12,20 +12,22 @@ Buster new deployment
     # bundle update
     bundle install
 
+If *not* running as user "backend", add the "backend" role to the current user
+	CREATE ROLE <username> LOGIN INHERIT ;
+	GRANT backend TO <username> ;
+and change the database.yml (see below) to use <username>
+
 Then one needs to create the layout
 	/home/backend/app/current -> this git repo or a released version of it
 	/home/backend/app/shared/log/
 	/home/backend/app/shared/config/
-		necessary???
-Updates to the files in
 	/home/backend/app/current/config/
-		modified:   config/settings.yml
+		add:
+		- settings.local.yml -> ../../shared/config/settings.local.yml
+		- database.yml       -> ../../sahred/config/database.yml
+		modified:
+		- config/settings.yml: AWS API keys
 
-		Ignored files:
-		  (use "git add -f <file>..." to include in what will be committed)
-			config/database.yml
-			config/settings.local.yml
-	!!!
 
 Plus postgresql server update
 
@@ -40,10 +42,20 @@ Install lein:
 fix for java 11: add [javax.xml.bind/jaxb-api "2.4.0-b180830.0359"] to 
 see also https://www.deps.co/blog/how-to-upgrade-clojure-projects-to-use-java-11/
 the deps in project.clj
-run
-	lein figwheel
-(but doesn't do anything for now)
 
+Build the necessary files???
+	lein cljsbuild once
+
+Testing???
+	lein figwheel
+(but doesn't do anything somehow)
+
+
+
+NGINX Configuration
+-------------------
+
+TODO
 
 
 
