@@ -55,7 +55,18 @@ Testing???
 NGINX Configuration
 -------------------
 
-TODO
+- install nginx
+- files added
+    /etc/nginx/
+	./sites-available/nginx-port-444
+	./sites-available/default-ssl
+	# NO!!! default!!
+	./sites-enabled/default-ssl -> ../sites-available/default-ssl
+	./sites-enabled/nginx-port-444 -> ../sites-available/nginx-port-444
+	./snippets/letsencrypt-acme-challenge.conf
+	./snippets/ssl_config.conf
+
+/etc/letsencrypt via certbot
 
 
 
