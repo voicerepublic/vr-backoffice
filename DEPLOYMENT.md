@@ -38,6 +38,7 @@ Install clojure
 Install lein:
 	down and run https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 fix for java 11: add [javax.xml.bind/jaxb-api "2.4.0-b180830.0359"] to 
+see also https://www.deps.co/blog/how-to-upgrade-clojure-projects-to-use-java-11/
 the deps in project.clj
 run
 	lein figwheel
