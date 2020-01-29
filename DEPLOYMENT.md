@@ -12,6 +12,24 @@ Buster new deployment
     # bundle update
     bundle install
 
+Then one needs to create the layout
+	/home/backend/app/current -> this git repo or a released version of it
+	/home/backend/app/shared/log/
+	/home/backend/app/shared/config/
+		necessary???
+Updates to the files in
+	/home/backend/app/current/config/
+		modified:   config/settings.yml
+
+		Ignored files:
+		  (use "git add -f <file>..." to include in what will be committed)
+			config/database.yml
+			config/settings.local.yml
+	!!!
+
+Plus postgresql server update
+
+
 
 
 
