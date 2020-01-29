@@ -11,6 +11,7 @@
                  [reagent-utils "0.1.7"]
                  [secretary "1.2.3"]
                  [org.clojure/core.incubator "0.1.3"]
+                 [javax.xml.bind/jaxb-api "2.4.0-b180830.0359"]
                  [cljs-ajax "0.5.4"]
                  [cljsjs/moment "2.10.6-4"]
                  [cljsjs/selectize "0.12.1-1"]

@@ -31,6 +31,19 @@ Plus postgresql server update
 
 
 
+Building the frontend
+----------------------
+
+Install clojure
+Install lein:
+	down and run https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+fix for java 11: add [javax.xml.bind/jaxb-api "2.4.0-b180830.0359"] to 
+the deps in project.clj
+run
+	lein figwheel
+(but doesn't do anything for now)
+
+
 
 
 ERROR rbenv: 1.9.3-p448 is not installed
