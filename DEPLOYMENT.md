@@ -7,7 +7,7 @@ Buster new deployment
 
     rbenv install 2.4.9
     rbenv local 2.4.9
-    gem install bundler -v 1.11.2
+    gem install bundler -v 1.17.3
     # rm Gemfile.lock
     # bundle update
     bundle install
