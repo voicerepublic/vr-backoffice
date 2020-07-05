@@ -73,8 +73,8 @@ namespace :deploy do
   task :cljsbuild do
     on release_roles(fetch(:assets_roles)) do
       # requires java & leinigen
-      execute "cd #{release_path} && /home/app/bin/lein clean"
-      execute "cd #{release_path} && /home/app/bin/lein cljsbuild once min"
+      execute "cd #{release_path} && $HOME/bin/lein clean"
+      execute "cd #{release_path} && $HOME/bin/lein cljsbuild once min"
     end
   end
   before :compile_assets, :cljsbuild
