@@ -15,7 +15,7 @@ VRBACKENDUSER=vr-backend
 # jre and nodejs for lein(ingen)
 apt install -y git vim build-essential gcc g++ libssl-dev libreadline-dev zlib1g-dev \
 	postgresql-server-dev-11 postgresql-11  postgresql-client-11	\
-	default-jre-headless nodejs
+	clojure default-jre-headless nodejs
 
 
 adduser --disabled-password $VRFRONTENDUSER
@@ -47,10 +47,12 @@ cd /home/$VRBACKENDUSER
 sudo -u $VRBACKENDUSER mkdir -p /home/$VRBACKENDUSER/app/shared/config
 sudo -u $VRBACKENDUSER touch /home/$VRBACKENDUSER/app/shared/config/database.yml
 sudo -u $VRBACKENDUSER touch /home/$VRBACKENDUSER/app/shared/config/settings.local.yml
+# The actual **CONTENT** of these files needs to be copied/installed/moved over
+# from git@github.com:voicerepublic/voicerepublic-config.git
+# directory backend/app-config
 chgrp root /home/$VRBACKENDUSER/app/shared/config/database.yml
 chmod 0600 /home/$VRBACKENDUSER/app/shared/config/database.yml
-# TODO TODO
-# The actual **CONTENT** of these files needs to be copied/installed/moved over
+echo "MANUAL WORK NEEDS TO BE DONE - READ THE SOURCE!"
 
 
 su - $VRBACKENDUSER
@@ -65,6 +67,22 @@ exit
 su - $VRBACKENDUSER
 lein
 exit
+
+# we need to setup $VRBACKENDUSER bin directory and .unicorn-config
+# from git@github.com:voicerepublic/voicerepublic-config.git
+# directory backend/homedir
+echo "MANUAL WORK NEEDS TO BE DONE - READ THE SOURCE!"
+# TODO
+# .unicorn-config refers to /home/backend which needs to be switched to $VRBACKENDUSER
+
+
+#####################
+# At this point we could start the backend, but the pg database is not initialized
+# and the backend role not applied to user vr-backend!!
+# If *not* running as user "backend", add the "backend" role to the current user
+# 	CREATE ROLE <username> LOGIN INHERIT ;
+# 	GRANT backend TO <username> ;
+# and change the database.yml (see below) to use <username>
 
 
 
