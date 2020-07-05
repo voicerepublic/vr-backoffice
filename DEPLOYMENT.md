@@ -1,3 +1,83 @@
+Server setup notes
+===================
+
+# see notes below concerning the case where the frontend user != app
+# or the backend user != backend
+VRFRONTENDUSER=vr-app
+VRBACKENDUSER=vr-backend
+
+# install basic hetzner buster image
+
+# git for rbenv installation
+# vim for my brain
+# postgres for server, client and ruby extension building
+# build-essential and rest for ruby building
+# jre and nodejs for lein(ingen)
+apt install -y git vim build-essential gcc g++ libssl-dev libreadline-dev zlib1g-dev \
+	postgresql-server-dev-11 postgresql-11  postgresql-client-11	\
+	default-jre-headless nodejs
+
+
+adduser --disabled-password $VRFRONTENDUSER
+adduser --disabled-password $VRBACKENDUSER
+
+#
+app install rabbitmq-server
+
+su - $VRBACKENDUSER
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+echo 'PATH=$HOME/.rbenv/bin:$PATH' >> .bashrc        
+echo 'eval "$(rbenv init -)"' >> .bashrc
+exit
+
+su - $VRFRONTENDUSER
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-installer | bash
+echo 'PATH=$HOME/.rbenv/bin:$PATH' >> .bashrc             
+echo 'eval "$(rbenv init -)"' >> .bashrc
+exit
+
+su - $VRBACKENDUSER
+rbenv install 2.4.9
+rbenv local 2.4.9
+gem install bundler -v 1.17.3
+
+
+# create necessary files in
+cd /home/$VRBACKENDUSER
+sudo -u $VRBACKENDUSER mkdir -p /home/$VRBACKENDUSER/app/shared/config
+sudo -u $VRBACKENDUSER touch /home/$VRBACKENDUSER/app/shared/config/database.yml
+sudo -u $VRBACKENDUSER touch /home/$VRBACKENDUSER/app/shared/config/settings.local.yml
+chgrp root /home/$VRBACKENDUSER/app/shared/config/database.yml
+chmod 0600 /home/$VRBACKENDUSER/app/shared/config/database.yml
+# TODO TODO
+# The actual **CONTENT** of these files needs to be copied/installed/moved over
+
+
+su - $VRBACKENDUSER
+cd
+mkdir bin
+cd bin
+wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+chmod ugo+x lein
+exit
+
+# we need to re-login to get correct path
+su - $VRBACKENDUSER
+lein
+exit
+
+
+
+
+
+On development server
+----------------------
+install ruby rbenv via 2.4.9, gemfile, .... (not really sure how to get this running)
+then
+	 bundle exec cap staging deploy
+currently not fully running, though ... (bundle build breaks due to missing deps)
+
+
 Deployment Notes
 ================
 
@@ -18,6 +98,9 @@ If *not* running as user "backend", add the "backend" role to the current user
 and change the database.yml (see below) to use <username>
 
 Then one needs to create the layout
+2020-07-05
+This should be done by capistrano!
+
 	/home/backend/app/current -> this git repo or a released version of it
 	/home/backend/app/shared/log/
 	/home/backend/app/shared/config/
