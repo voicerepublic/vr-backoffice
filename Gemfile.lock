@@ -96,10 +96,9 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (~> 1.3)
-    capistrano-bundler (1.1.4)
+    capistrano-bundler (1.6.0)
       capistrano (~> 3.1)
-      sshkit (~> 1.2)
-    capistrano-rails (1.1.2)
+    capistrano-rails (1.5.0)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
     capistrano-rbenv (2.1.6)
@@ -403,8 +402,8 @@ DEPENDENCIES
   byebug
   c3-rails
   capistrano (~> 3.4.0)
-  capistrano-bundler (~> 1.1.1)
-  capistrano-rails (~> 1.1.1)
+  capistrano-bundler (~> 1.6.0)
+  capistrano-rails (~> 1.5.0)
   capistrano-rbenv (~> 2.1.0)
   coffee-rails (~> 4.1.0)
   d3_rails
