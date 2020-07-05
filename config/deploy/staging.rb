@@ -14,8 +14,15 @@
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '185.203.112.8', user: 'backend', roles: %w{web app db}
-set :branch, ENV['REVISION'] || 'integration'
+# 20200705 NP changed to buster hetzner server
+server '49.12.97.210', user: 'vr-backend', roles: %w{web app db}
+# 20200705 NP commented
+# not sure what the "integration" branch is for, so for now use
+# the same as live
+#set :branch, ENV['REVISION'] || 'integration'
+#
+set :branch, 'buster'
+set :deploy_to, '/home/vr-backend/app'
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
