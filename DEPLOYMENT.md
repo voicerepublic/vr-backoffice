@@ -88,6 +88,19 @@ echo "MANUAL WORK NEEDS TO BE DONE - READ THE SOURCE!"
 
 
 
+Database move
+-------------
+on old server:
+	pg_dump rails_production > ~/pgdump_`date -I`.sql && gzip ~/pgdump_`date -I`.sql && ll pgdump_*
+move to new server
+on new server
+	dropdb rails_production
+	createdb rails_production
+	psql -f pgdump_YYYY-MM-DD postgres
+
+
+
+
 On development server
 ----------------------
 install ruby rbenv via 2.4.9, gemfile, .... (not really sure how to get this running)
