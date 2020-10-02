@@ -69,3 +69,5 @@ group :development, :test do
   gem 'rack-test'
   gem 'factory_girl_rails'
 end
+
+gem "fog-backblaze", "~> 0.3.0"
