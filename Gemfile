@@ -20,6 +20,7 @@ gem 'devise'
 gem 'sprockets', '~> 3.0'
 gem 'mime-types'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sqlite3', '~> 1.3.6'
 
 # optional
 gem 'active_skin'
