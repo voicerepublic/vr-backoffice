@@ -102,7 +102,7 @@ class Talk < ActiveRecord::Base
   serialize :listeners
   serialize :social_links
 
-  image_accessor :image
+  dragonfly_accessor :image
 
   # poor man's auto scopes
   STATES.each do |state|
