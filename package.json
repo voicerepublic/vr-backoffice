@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@rails/webpacker": "4.3.0",
+    "github-ssh-url": "^1.0.1"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.11.0"
+  }
+}
