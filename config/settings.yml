@@ -32,3 +32,13 @@ fog:
 
 storage:
   backup_recordings: vr-euc1-dev-backup-recordings@eu-central-1
+
+secret:
+  development:
+    secret_key_base: a44a31d23f54d081b9f3737ab886048a01e2188e659d53ea608b997bb34a6dcc77b91b729a607807fb6771b6cfcd76be09bfdd0f07a6021c2c0969a07fa11755
+  test:
+    secret_key_base: a44a31d23f54d081b9f3737ab886048a01e2188e659d53ea608b997bb34a6dcc77b91b729a607807fb6771b6cfcd76be09bfdd0f07a6021c2c0969a07fa11755
+  staging:
+    secret_key_base: a44a31d4gf54d081b9f3737ab886048a01e2188e659d53ea608b997bb34a6dcc77b91b729a607807fb6771b6cfcd76be09bfdd0f07a6021c2c0969a07fa11755
+  production:
+    secret_key_base: a44341d23f54d081b9f3737ab886048a01e2188e659d53ea608b997bb34a6dcc77b91b729a607807fb6771b6cfcd76be09bfdd0f07a6021c2c0969a07fa11755
