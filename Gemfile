@@ -22,7 +22,7 @@ gem 'faye-authentication', github: 'branch14/faye-authentication'
 gem 'devise'
 gem 'sprockets'#, '~> 3.0'
 gem 'mime-types'
-gem 'sdoc'#, '~> 0.4.0', group: :doc
+gem 'sdoc', '1.1.0', group: :doc
 gem 'sqlite3'#, '~> 1.3.6'
 # optional
 gem 'active_skin'
@@ -79,3 +79,4 @@ gem 'zeitwerk'
 gem 'rake'
 gem 'dragonfly'
 gem "bourbon"
+gem 'figaro'

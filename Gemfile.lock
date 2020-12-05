@@ -220,6 +220,8 @@ GEM
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
     ffi (1.13.1)
+    figaro (1.2.0)
+      thor (>= 0.14.0, < 2)
     fog-aws (3.6.7)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
@@ -497,6 +499,7 @@ DEPENDENCIES
   dragonfly
   factory_girl_rails
   faye-authentication!
+  figaro
   fog-aws
   friendly_id
   haml-rails
@@ -519,7 +522,7 @@ DEPENDENCIES
   rspec-rails
   rspec_junit_formatter
   sass-rails (>= 6)
-  sdoc
+  sdoc (= 1.1.0)
   spring
   spring-commands-rspec
   sprockets
