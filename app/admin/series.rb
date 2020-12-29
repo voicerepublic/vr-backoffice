@@ -51,6 +51,9 @@ ActiveAdmin.register Series do
       row :description do
         raw v.description
       end
+      row :image do |ad|
+        image_tag url_for(ad.series_image_url)
+      end
       row :penalty
       row :created_at
       row :updated_at
@@ -77,10 +80,14 @@ ActiveAdmin.register Series do
       f.input :title
       f.input :teaser, input_html: { rows: 1 }
       f.input :description
+      f.input :image, as: :file
       f.input :penalty, hint: "1 = no penalty, 0 = max penalty (I know, it's confusing.) Applies to this series and all future talks in this series."
       #f.input :image, as: :dragonfly
       f.input :image_alt
     end
+    #f.inputs 'Image' do
+    #  f.input :image, as: :dragonfly
+    #end
     f.actions
   end
 

@@ -107,6 +107,9 @@ ActiveAdmin.register User do
       row :summary do
         raw user.summary
       end
+      row :avatar do |ad|
+        image_tag url_for(ad.avatar_image_url)
+      end
       row :about do
         raw user.about
       end
@@ -155,6 +158,7 @@ ActiveAdmin.register User do
       f.input :firstname
       f.input :lastname
       f.input :email
+      f.input :avatar, as: :file
       f.input :tag_list, input_html: { value: f.object.tag_list * ', ' }, label: "Tags"
       f.input :featured_from, as: :string,
               input_html: {
