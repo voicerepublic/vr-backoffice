@@ -205,6 +205,9 @@ ActiveAdmin.register Talk do
       row :description
       row :language
       row :related_talk_id
+      row :image do |ad|
+        image_tag url_for(ad.talk_image_url)
+      end
       row 'download' do
         url_mp3 = public_url("vrmedia/#{talk.id}-clean.mp3")
         url_ogg = public_url("vrmedia/#{talk.id}-clean.ogg")
@@ -277,6 +280,7 @@ ActiveAdmin.register Talk do
       f.input :related_talk_id, as: :string, hint: 'ID of related talk'
       f.input :penalty, hint: "1 = no penalty, 0 = max penalty (I know, it's confusing.) Applies only to this talk."
       f.input :image_alt
+      f.input :image, as: :file
     end
     #f.inputs 'Image' do
     #  f.input :image, as: :dragonfly

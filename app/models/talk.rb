@@ -102,7 +102,8 @@ class Talk < ActiveRecord::Base
   serialize :listeners
   serialize :social_links
 
-  dragonfly_accessor :image
+  # dragonfly_accessor :image
+  has_one_attached :image
 
   # poor man's auto scopes
   STATES.each do |state|
@@ -119,6 +120,14 @@ class Talk < ActiveRecord::Base
 
   scope :prelive_or_live, -> { where('talks.state in (?)', [:prelive, :live]) }
   scope :ordered, -> { order('starts_at ASC') }
+
+  def talk_image_url
+    if self.image.attachment
+      self.image.attachment.service_url
+    else
+      '/assets/defaults/talk-image-a8f7b7353dcb14a287b371ae16fb7ddcf3c6898251e0e0774c08758c84fe73f5.jpg'
+    end
+  end
 
   def effective_duration # in seconds
     ended_at - started_at
