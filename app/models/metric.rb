@@ -1,4 +1,4 @@
-class Metric < ActiveRecord::Base
+class Metric < ApplicationRecord
 
   scope :ordered, -> { order('created_at ASC') }
 

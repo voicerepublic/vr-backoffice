@@ -15,7 +15,7 @@
 # * title [string]
 # * updated_at [datetime, not null] - last update time
 # * user_id [integer] - belongs to :user
-class Series < ActiveRecord::Base
+class Series < ApplicationRecord
 
   belongs_to :user
   has_many :talks

@@ -28,7 +28,7 @@
 # * uid [string] - TODO: document me
 # * updated_at [datetime, not null] - last update time
 # * website [string] - TODO: document me
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   acts_as_taggable
 

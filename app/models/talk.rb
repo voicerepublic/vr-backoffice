@@ -22,7 +22,7 @@
 # * title [string]
 # * updated_at [datetime] - last update time
 # * series_id [integer] - belongs to :series
-class Talk < ActiveRecord::Base
+class Talk < ApplicationRecord
 
   QUEUE = 'mail'
 
