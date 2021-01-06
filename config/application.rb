@@ -1,18 +1,24 @@
 require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
+require 'rails/all'
 require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
-
+require_relative '../app/middlewares/faye_auth'
+require_relative '../app/middlewares/backup'
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+# Rails.autoloaders.logger = Logger.new("#{Rails.root}/log/autoloading.log")
+
 
 module VoicerepublicBackoffice
   class Application < Rails::Application
+    config.load_defaults 6.0
+    config.autoloader = :classic
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -31,10 +37,10 @@ module VoicerepublicBackoffice
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.middleware.use 'FayeAuth', secret: Settings.faye.secret_token
-    config.middleware.use 'Backup'
+    config.middleware.use FayeAuth, secret: ENV['faye_secret_token']
+    config.middleware.use Backup
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.active_record.raise_in_transactional_callbacks = true
   end
 end

@@ -79,8 +79,8 @@ ActiveAdmin.register Organization do
           th 'Type'
           th 'Subtype'
           th 'Identifier'
-          th 'Release'
-          th 'Version'
+          # th 'Release'
+          # th 'Version'
           th 'Disappeared At'
         end
         organization.devices.each do |device|
@@ -89,8 +89,8 @@ ActiveAdmin.register Organization do
             td device.type
             td device.subtype
             td device.identifier
-            td device.release
-            td device.version
+            # td device.release
+            # td device.version
             td device.disappeared_at
           end
         end

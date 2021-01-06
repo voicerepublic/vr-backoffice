@@ -8,7 +8,7 @@ class Device < ActiveRecord::Base
 
   self.inheritance_column = false
 
-  validates :pairing_code, uniqueness: true, allow_nil: true
+  # validates :pairing_code, uniqueness: true, allow_nil: true
 
   belongs_to :organization
   has_many :device_reports
