@@ -1,12 +1,12 @@
 # config valid only for Capistrano 3.1
-lock '3.1.0'
+lock '3.4.1'
 
 set :rbenv_type, :user
-set :rbenv_ruby, '2.1.2'
-set :rbenv_ruby_version, "2.1.2"
+set :rbenv_ruby, '2.7.1'
+set :rbenv_ruby_version, "2.7.1"
 
 set :application, 'voicerepublic_backoffice'
-set :repo_url, 'git@gitlab.com:voicerepublic/backoffice.git'
+set :repo_url, 'git@github.com:voicerepublic/vr-backoffice.git'
 
 set :ssh_options, { forward_agent: true }
 
@@ -73,8 +73,8 @@ namespace :deploy do
   task :cljsbuild do
     on release_roles(fetch(:assets_roles)) do
       # requires java & leinigen
-      execute "cd #{release_path} && /home/app/bin/lein clean"
-      execute "cd #{release_path} && /home/app/bin/lein cljsbuild once min"
+      execute "cd #{release_path} && $HOME/bin/lein clean"
+      execute "cd #{release_path} && $HOME/bin/lein cljsbuild once min"
     end
   end
   before :compile_assets, :cljsbuild

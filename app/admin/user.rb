@@ -7,7 +7,7 @@ ActiveAdmin.register User do
   actions :all, except: [:destroy]
 
   action_item only: :show do
-    link_to t('.tweetplan'), tweetplan_admin_user_path(user)
+    link_to t('.tweetplan'), tweetplan_admin_user_path(self)
   end
 
   member_action :tweetplan, method: :get do
@@ -17,7 +17,7 @@ ActiveAdmin.register User do
   end
 
   action_item only: :show do
-    link_to t('.grant'), credits_admin_user_path(user)
+    link_to t('.grant'), credits_admin_user_path(self)
   end
 
   member_action :credits, method: [:get, :post] do
@@ -176,8 +176,8 @@ ActiveAdmin.register User do
       f.input :image_alt
       f.input :contact_email
       f.input :website
-      f.input :facebook
-      f.input :twitter
+      # f.input :facebook
+      # f.input :twitter
     end
     f.actions
   end

@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 
   scope :ordered, -> { order('firstname, lastname') }
 
-  image_accessor :avatar
+  dragonfly_accessor :avatar
 
   def full_name
     [firstname, lastname].compact * ' '

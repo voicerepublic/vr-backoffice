@@ -2,7 +2,7 @@ ActiveAdmin.register Metric do
 
   menu priority: 23
 
-  action_item do
+  action_item only: :show do
     link_to t('.report'), report_admin_metrics_path
   end
 

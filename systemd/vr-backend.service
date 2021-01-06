@@ -1,0 +1,17 @@
+[Unit]
+Description=VoiceRepublic backend service
+After=network.target auditd.service
+
+[Service]
+Type=forking
+PIDFile=/home/backend/app/current/unicorn.pid
+User=backend
+WorkingDirectory=/home/backend
+ExecStart=/home/backend/bin/unicorn_wrapper start
+ExecStop=/usr/bin/kill -QUIT $MAINPID
+#USR2 signal will spawn the new master process, the kill signal to the old master should be send from rails
+ExecReload=/bin/kill -s SIGUSR2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+

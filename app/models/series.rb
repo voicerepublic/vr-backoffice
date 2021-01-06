@@ -27,7 +27,7 @@ class Series < ActiveRecord::Base
   validates :teaser, length: { maximum: Settings.limit.string }
   validates :description, length: { maximum: Settings.limit.text }
 
-  image_accessor :image
+  dragonfly_accessor :image
 
   def set_description_as_html
     self.description_as_html = MARKDOWN.render(description)
