@@ -15,7 +15,8 @@
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 # 20200705 NP changed to buster hetzner server
-server '49.12.97.210', user: 'vr-backend', roles: %w{web app db}
+#server '49.12.97.210', user: 'vr-backend', roles: %w{web app db}
+server '192.168.122.137', user: 'vr-backend', roles: %w{web app db}
 # 20200705 NP commented
 # not sure what the "integration" branch is for, so for now use
 # the same as live
