@@ -18,16 +18,16 @@ site_root: 'http://localhost:3000'
 
 fog:
   storage:
-    provider: AWS
-    region: us-west-2
-    aws_access_key_id: AKIAJU3G7GG57NKGRW6Q
-    aws_secret_access_key: 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
+    provider: <%= ENV['provider'] %>
+    region: <%= ENV['region'] %>
+    aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+    aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
   compute:
-    provider: AWS
-    region: us-west-2
+    provider: <%= ENV['provider'] %>
+    region: <%= ENV['region'] %>
     # user: compute
-    aws_access_key_id: AKIAJU3G7GG57NKGRW6Q
-    aws_secret_access_key: 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
+    aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+    aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
 
 storage:
   backup_recordings: vr-euc1-dev-backup-recordings@eu-central-1
