@@ -54,9 +54,9 @@ ActiveAdmin.register Delayed::Job, as: "Job" do
     column :run_at
     column :attempts
     column :queue
-    column :handler do |job|
-      job.display_handler
-    end
+    # column :handler do |job|
+    #   job.display_handler
+    # end
     column :locked_at
     column :locked_by
     column :last_error do |job|
@@ -67,9 +67,9 @@ ActiveAdmin.register Delayed::Job, as: "Job" do
   end
 
   scope :all
-  scope :failed
-  scope :audio
-  scope :trigger
-  scope :mail
+  # scope :failed
+  # scope :audio
+  # scope :trigger
+  # scope :mail
 
 end
