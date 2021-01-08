@@ -6,9 +6,9 @@ ActiveAdmin.register User do
 
   actions :all, except: [:destroy]
 
-  action_item only: :show do
-    link_to t('.tweetplan'), tweetplan_admin_user_path(self)
-  end
+  # action_item only: :show do
+  #   link_to t('.tweetplan'), tweetplan_admin_user_path(self)
+  # end
 
   member_action :tweetplan, method: :get do
     @live = resource.talks.live.ordered
@@ -16,9 +16,9 @@ ActiveAdmin.register User do
     @prelive = resource.talks.prelive.ordered
   end
 
-  action_item only: :show do
-    link_to t('.grant'), credits_admin_user_path(self)
-  end
+  # action_item only: :show do
+  #   link_to t('.grant'), credits_admin_user_path(self)
+  # end
 
   member_action :credits, method: [:get, :post] do
     if params[:grant] && qty = params[:grant][:quantity]
@@ -119,6 +119,12 @@ ActiveAdmin.register User do
       row :website
       row :facebook
       row :twitter
+      row :tweetplan do
+        link_to t('.tweetplan'), tweetplan_admin_user_path(user)
+      end
+      row :tweetplan do
+        link_to t('.grant'), credits_admin_user_path(user)
+      end
     end
 
     panel "Transaction History" do
@@ -202,8 +208,8 @@ ActiveAdmin.register User do
     column :last_request_at
     column :contact_email
     column :website
-    column :facebook
-    column :twitter
+    # column :facebook
+    # column :twitter
   end
 
   permit_params :firstname, :lastname, :email, :avatar,
