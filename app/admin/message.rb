@@ -1,5 +1,5 @@
 ActiveAdmin.register Message do
-	# permit_params :content, :user_id, :talk_id
+	permit_params :content, :user_id, :talk_id
   menu parent: 'Admin'
 
   filter :content
