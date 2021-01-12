@@ -1,6 +1,6 @@
-class Message < ActiveRecord::Base
+class Message < ApplicationRecord
 
-  belongs_to :user
-  belongs_to :talk
+  belongs_to :user, optional: true
+  belongs_to :talk, optional: true
 
 end

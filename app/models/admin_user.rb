@@ -12,7 +12,7 @@
 # * reset_password_token [string] - Devise Recoverable module
 # * sign_in_count [integer, default=0, not null] - Devise Trackable module
 # * updated_at [datetime] - last update time
-class AdminUser < ActiveRecord::Base
+class AdminUser < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, 

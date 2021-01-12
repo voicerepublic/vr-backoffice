@@ -1,3 +1,3 @@
-class SocialShare < ActiveRecord::Base
+class SocialShare < ApplicationRecord
 
 end

@@ -1,4 +1,4 @@
-class Transaction < ActiveRecord::Base
+class Transaction < ApplicationRecord
 
   # disable sti
   self.inheritance_column = false

@@ -28,7 +28,7 @@
 # * uid [string] - TODO: document me
 # * updated_at [datetime, not null] - last update time
 # * website [string] - TODO: document me
-class User < ActiveRecord::Base
+class User < ApplicationRecord
 
   acts_as_taggable
 
@@ -50,7 +50,16 @@ class User < ActiveRecord::Base
 
   scope :ordered, -> { order('firstname, lastname') }
 
-  image_accessor :avatar
+  # dragonfly_accessor :avatar
+  has_one_attached :avatar
+
+  def avatar_image_url
+    if self.avatar.attachment
+      self.avatar.attachment.service_url
+    else
+      '/assets/defaults/user-avatar-9e142d0d1016adf894ff6764dd0c5633f6bc970ac03d3b9066ce297069a9e5ef.jpg'
+    end
+  end
 
   def full_name
     [firstname, lastname].compact * ' '

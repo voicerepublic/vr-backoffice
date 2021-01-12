@@ -15,7 +15,7 @@
 # * title [string]
 # * updated_at [datetime, not null] - last update time
 # * user_id [integer] - belongs to :user
-class Series < ActiveRecord::Base
+class Series < ApplicationRecord
 
   belongs_to :user
   has_many :talks
@@ -27,8 +27,18 @@ class Series < ActiveRecord::Base
   validates :teaser, length: { maximum: Settings.limit.string }
   validates :description, length: { maximum: Settings.limit.text }
 
-  image_accessor :image
+  # dragonfly_accessor :image
 
+  has_one_attached :image
+
+  def series_image_url
+    if self.image.attachment
+      self.image.attachment.service_url
+    else
+      '/assets/defaults/talk-image-a8f7b7353dcb14a287b371ae16fb7ddcf3c6898251e0e0774c08758c84fe73f5.jpg'
+    end
+  end
+  
   def set_description_as_html
     self.description_as_html = MARKDOWN.render(description)
   end

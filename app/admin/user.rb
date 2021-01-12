@@ -6,9 +6,9 @@ ActiveAdmin.register User do
 
   actions :all, except: [:destroy]
 
-  action_item only: :show do
-    link_to t('.tweetplan'), tweetplan_admin_user_path(user)
-  end
+  # action_item only: :show do
+  #   link_to t('.tweetplan'), tweetplan_admin_user_path(self)
+  # end
 
   member_action :tweetplan, method: :get do
     @live = resource.talks.live.ordered
@@ -16,9 +16,9 @@ ActiveAdmin.register User do
     @prelive = resource.talks.prelive.ordered
   end
 
-  action_item only: :show do
-    link_to t('.grant'), credits_admin_user_path(user)
-  end
+  # action_item only: :show do
+  #   link_to t('.grant'), credits_admin_user_path(self)
+  # end
 
   member_action :credits, method: [:get, :post] do
     if params[:grant] && qty = params[:grant][:quantity]
@@ -107,6 +107,9 @@ ActiveAdmin.register User do
       row :summary do
         raw user.summary
       end
+      row :avatar do |ad|
+        image_tag url_for(ad.avatar_image_url)
+      end
       row :about do
         raw user.about
       end
@@ -116,6 +119,12 @@ ActiveAdmin.register User do
       row :website
       row :facebook
       row :twitter
+      row :tweetplan do
+        link_to t('.tweetplan'), tweetplan_admin_user_path(user)
+      end
+      row :tweetplan do
+        link_to t('.grant'), credits_admin_user_path(user)
+      end
     end
 
     panel "Transaction History" do
@@ -155,6 +164,7 @@ ActiveAdmin.register User do
       f.input :firstname
       f.input :lastname
       f.input :email
+      f.input :avatar, as: :file
       f.input :tag_list, input_html: { value: f.object.tag_list * ', ' }, label: "Tags"
       f.input :featured_from, as: :string,
               input_html: {
@@ -176,8 +186,8 @@ ActiveAdmin.register User do
       f.input :image_alt
       f.input :contact_email
       f.input :website
-      f.input :facebook
-      f.input :twitter
+      # f.input :facebook
+      # f.input :twitter
     end
     f.actions
   end
@@ -198,8 +208,8 @@ ActiveAdmin.register User do
     column :last_request_at
     column :contact_email
     column :website
-    column :facebook
-    column :twitter
+    # column :facebook
+    # column :twitter
   end
 
   permit_params :firstname, :lastname, :email, :avatar,
