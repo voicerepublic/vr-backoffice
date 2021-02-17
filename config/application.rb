@@ -1,5 +1,5 @@
 require File.expand_path('../boot', __FILE__)
-
+require 'dotenv/load'
 # Pick the frameworks you want:
 require 'rails/all'
 require "active_record/railtie"

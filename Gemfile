@@ -82,3 +82,4 @@ gem "bourbon"
 gem 'figaro'
 gem 'activestorage-backblaze'
 gem "aws-sdk-s3", require: false
+gem 'dotenv-rails'

@@ -166,6 +166,10 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
+    dotenv (2.7.5)
+    dotenv-rails (2.7.5)
+      dotenv (= 2.7.5)
+      railties (>= 3.2, < 6.1)
     dragonfly (1.2.1)
       addressable (~> 2.3)
       multi_json (~> 1.0)
@@ -519,6 +523,7 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record
   devise
+  dotenv-rails
   dragonfly
   factory_girl_rails
   faye-authentication!
