@@ -74,7 +74,6 @@ group :development, :test do
 end
 
 gem 'config'
-gem 'webpacker', '~> 4.0'
 gem 'zeitwerk'
 gem 'rake'
 gem 'dragonfly'

@@ -15,7 +15,7 @@ ActiveAdmin.register ActsAsTaggableOn::Tag, as: 'Tag' do
     column :name
     column 'Occurences', :taggings_count
     column :promoted, sortable: :promoted do |tag|
-      tag.promoted? ? status_tag("yes", :ok) : status_tag("no")
+      tag.promoted? ? status_tag("yes") : status_tag("no")
     end
     actions
   end
